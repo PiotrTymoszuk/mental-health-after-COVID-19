@@ -44,26 +44,26 @@ knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, dev = "cai
 
 ## Study design and participants
 
-The multi-center international online survey study 'Health after COVID-19 in Tyrol' (ClinicalTrials.gov: NCT04661462) was conducted between the 30^th^ September 2020 and 11^th^ July 20221 in two independently recruited cohorts in the neighboring central European regions, Tyrol/Austria and South Tyrol/Italy [@Sahanic2021]. The study populations encompassed residents of the study regions aged $\geq$ 16 (Austria/Tyrol) or $\geq$ 18 years (Italy/South Tyrol) who experienced a SARS-CoV2 infection corroborated by a laboratory test (PCR or seropositivity). The analysis inclusion criterion was a minimum observation time between the diagnosis of SARS-CoV2 infection and the survey completion $\geq$ 28 days. The analysis exclusion criterion was hospitalization because of COVID-19. The scheme of study and analysis enrollment is depicted in __Figure 1__. The participants were invited by a public media call (both cohorts) or by their general practitioners (Italy/South Tyrol).
+The multi-center international online survey study 'Health after COVID-19 in Tyrol' (ClinicalTrials.gov: NCT04661462) was conducted between the 30^th^ September 2020 and 11^th^ July 20221 in two independently recruited cohorts in the neighboring central European regions, Tyrol/Austria and South Tyrol/Italy [@Sahanic2021]. The study cohorts encompassed residents of the study regions aged $\geq$ 16 (Austria/Tyrol) or $\geq$ 18 years (Italy/South Tyrol) who experienced a SARS-CoV2 infection corroborated by a laboratory test (PCR or seropositivity). The analysis inclusion criterion was a minimum observation time between the diagnosis of SARS-CoV2 infection and the survey completion $\geq$ 28 days. The analysis exclusion criterion was hospitalization because of COVID-19. The scheme of study and analysis enrollment is depicted in __Figure 1__. The participants were invited by a public media call (both cohorts) or by their general practitioners (Italy/South Tyrol).
 
 The study was conducted in accordance with the Declaration of Helsinki as well as the national and European data policies. Each participant gave a digitally signed informed consent prior to the survey start. The study protocol was approved by the institutional review boards of the Medical University of Innsbruck (Tyrol/Austria, approval number: 1257/2020) and of the South Tyrol province (South Tyrol/Italy, 0150701).
 
 ## Measures, definitions and data transformation
 
-The detailed description of the questionnaire is provided by Sahanic et al [@Sahanic2021]. In brief, dates of the study completion and SARS-CoV2 infection diagnosis, data on biometry (weight, height), demographics (age, sex), pre-existing co-morbidities, socioeconomic status (residence region, mother tongue, employment status and profession), smoking history and COVID-19 relevant medication, symptom duration (44 items), symptomatic therapy and course of SARS-CoV2 infection, recovery duration and status as well as mental health and psychosocial stress following the disease were queried. The complete list of features analyzed in the current report is presented in __Supplementary Table \@ref(tab:tab-model-variables)__ and the baseline characteristic of the study populations is shown in __Table 1__ and __Supplementary Table \@ref(tab:tab-suppl-features)__.
+The detailed description of the questionnaire is provided by Sahanic et al [@Sahanic2021]. In brief, dates of the study completion and SARS-CoV2 infection diagnosis, data on biometry (weight, height), demographics (age, sex), pre-existing co-morbidities, socioeconomic status (residence region, mother tongue, employment status and profession), smoking history and COVID-19 relevant medication, symptom duration (44 items), symptomatic therapy and course of SARS-CoV2 infection, recovery duration and status as well as mental health and psychosocial stress following the disease were queried. The complete list of features analyzed in the current report is presented in __Supplementary Table \@ref(tab:tab-model-variables)__ and the baseline characteristic of the study collectives is shown in __Table 1__ and __Supplementary Table \@ref(tab:tab-suppl-features)__.
 
-Self-reported COVID-19 symptoms were retrospectively assigned to the following duration classes: absent, present for 1 – 3 days, $\leq$ 1 week, $\leq$ 2 weeks, $\leq$ 4 weeks, $\leq$ 3 months, $\leq$ 6 months and > 6 months. Acute symptoms were defined as complaints when present in the first 2 weeks of the disease, sub-acute when present in 2 - 4 weeks after clinical onset, persistent when present for $\geq$ 4 weeks [@Sahanic2021]. Confusion, impaired concentration and forgetfulness were classified as 'neurocognitive symptoms'. For modeling, the overall number of overall acute symptoms was stratified by quartiles (Q1 - Q4) and the overall persistent symptom count by median and 75^th^ percentile . The number of acute neuro-cognitive symptoms was stratified by median and 75^th^ percentile and for persistent neuro-cognitive manifestations coded as an index present/absent variable (__Supplementary Table \@ref(tab:tab-model-variables)__ and __Table 2__).
+Self-reported COVID-19 symptoms were retrospectively assigned to the following duration classes: absent, present for 1 – 3 days, $\leq$ 1 week, $\leq$ 2 weeks, $\leq$ 4 weeks, $\leq$ 3 months, $\leq$ 6 months and > 6 months. Symptoms were classified as acute complaints being present during the first 2 weeks after clinical onset and persistent symptoms when present for $\geq$ 4 weeks [@Sahanic2021]. Confusion, impaired concentration and forgetfulness were classified as 'neurocognitive symptoms'. For modeling, the overall number of overall acute symptoms was stratified by quartiles (Q1 - Q4) and the overall persistent symptom count by median and 75^th^ percentile . The number of acute neuro-cognitive symptoms was stratified by median and 75^th^ percentile and for persistent neuro-cognitive manifestations coded as an index present/absent variable (__Supplementary Table \@ref(tab:tab-model-variables)__ and __Table 2__).
 
 Depression/anxiety before SARS-CoV2 infection, pre-existing sleep disorders, acute COVID-19 perception (common cold-, influenza-, gastroenteritis-like or unique/not experienced before), symptom relapse, complete convalescence, rehabilitation need and percent physical performance loss following COVID-19 were surveyed as single question items each. For modeling, the physical performance loss was stratified as 0 - 25%, 26 - 50%, 51% - 75% and 76 - 100%.
 
-Self-perceived overall mental health (OMH) and quality of life (QoL) were assessed as single questions (‘excellent’, ‘good’, ‘fair’, ‘poor’, scored: 0, 1, 2, 3). Anxiety/depression following COVID-19 at time of study completion were investigated using PHQ-4 module (two questions each, possible answers: ‘never’, ‘some days’, ‘over 50% of days’, ‘almost every day’, scoring: 0, 1, 2, 3 points). For separate positivity screening for depression (DPR) or anxiety (ANX), cutoffs of $\geq$ 3 point sum were applied to the respective scales. PHQ-4 questions were also analyzed as a combined depression/anxiety score with a cutoff of $\geq$ 6 point sum [@Lowe2010]. Psychosocial stress factors were measured with an adapted version of the PHQ stress module [@Lowe2002; @Beutel2018]. The items on weight, sexuality and past traumatic/serious events were were removed, the item on worries and dreams was adapted to COVID-19, resulting in seven questions with possible answers: ‘no’, ‘little’, ‘some’, ‘a lot’, scoring: 0, 1, 2, 3). For modeling, the stress scoring was re-coded as quartile strata encompassing 0 - 2, 3 - 4, 5 - 6, 7 - 21 points.
+Self-perceived overall mental health (OMH) and quality of life (QoL) were assessed as single questions (‘excellent’, ‘good’, ‘fair’, ‘poor’, scored: 0, 1, 2, 3). Anxiety/depression following COVID-19 at time of study completion were investigated using PHQ-4 module (two questions each, possible answers: ‘never’, ‘some days’, ‘over 50% of days’, ‘almost every day’, scoring: 0, 1, 2, 3 points). Clinical signs of depression (DPR) or anxiety (ANX) were defined with the cutoffs of $\geq$ 3 point sum [@Lowe2010]. Psychosocial stress factors were measured with an adapted version of the PHQ stress module [@Lowe2002; @Beutel2018]. The items on weight, sexuality and past traumatic/serious events were were removed, the item on worries and dreams was adapted to COVID-19, resulting in seven questions with possible answers: ‘no’, ‘little’, ‘some’, ‘a lot’, scoring: 0, 1, 2, 3). For modeling, the stress scoring was re-coded as quartile strata encompassing 0 - 2, 3 - 4, 5 - 6, 7 - 21 points.
 
 ## Statistical analysis
 ### Data transformation, visualization, descriptive statistic and hypothesis testing
 
 The study variables were transformed, analyzed and visualized with R version 4.0.5 with _tidyverse_ [@Wickham2019;@Wickham2016], _cowplot_ [@Wilke2019] and _ggvenn_ packages. 
 
-For categorical variables, numbers and percents of complete answers are presented. As most of the analyzed numeric features had a discrete or non-normal distribution as checked by Shapiro-Wilk test, medians, interquartile ranges (IQR) and feature ranges are presented. To compare differences in distribution of categorical features, $\chi^2$ test was applied. To assess significance of differences in numeric variables between groups, U or Kruskal-Wallis test was used, as appropriate. P values were corrected for multiple comparisons with Benjamini-Hochberg method [@Benjamini1995]. The set of tools used for descriptive statistics and hypothesis testing is available from https://github.com/PiotrTymoszuk/counting-tools.
+For categorical variables, numbers and percents of complete answers are presented. As most of the analyzed numeric features had a discrete or non-normal distribution as checked by Shapiro-Wilk test, medians, interquartile ranges (IQR) and feature ranges are presented. To compare differences in distribution of categorical features, $\chi^2$ test was applied. To assess significance of differences in numeric variables between groups, U or Kruskal-Wallis test was used, as appropriate. Overlap between two categorical variables was expressed as Cohen’s kappa statistics (function _Kappa()_, package _vcd_), whose significance was assessed by Z test. P values were corrected for multiple comparisons with Benjamini-Hochberg method [@Benjamini1995]. The set of tools used for descriptive statistics and hypothesis testing is available from https://github.com/PiotrTymoszuk/counting-tools.
 
 ### Random forest modeling of mental health scoring
 
@@ -71,9 +71,9 @@ Multi-parameter random forest regression models [@Breiman2001] describing the sc
 
 To discern the features with the largest effect on the OMH, QoL, ANX and DPR scoring each, differences in mean squared error ($\Delta$MSE) associated with the model components were extracted using _importance()_ function on the final models developed by _caret_ (__Supplementary Figures \@ref(fig:fig-mental-health-score-model) - \@ref(fig:fig-phq-depression-score-model)__) [@Strobl2008]. To identify common factors with the greatest impact on the combined mental health scoring, the normalized values of $\Delta$MSE of the OMH, QoL, ANX and DPR scoring for each model component were subjected to centered principal component analysis (PCA) using _PCAproj()_ function from _pcaPP_ package [@Croux2007]. The features with the 10 largest Euclidean distances from the PCA center were extracted.
 
-### Uni-variate modeling
+### Univariable modeling
 
-Correlation of the OMH, QoL, ANX and DPR scoring and the most influential factors identified by the random forest technique was assessed by age- and sex-weighted Poisson regression (generalized linear modeling, log link function). The frequency weights for the Austria/Tyrol and Italy/South Tyrol cohort were based on the age and sex distribution of COVID cases in Tyrol [@AustrianAgencyforHealthandFoodSafetyAGES] and Italy [@IstitutoSuperiorediSanitaISS], respectively[@Sahanic2021]. Significance of model estimates and their 95% confidence intervals were determined with Wald Z test. P values were corrected for multiple comparisons by Benjamini-Hochberg method [@Benjamini1995]. The correlation was deemed significant when significant association was present in both study cohorts. Model estimate extraction and visual quality control was accomplished with home-developed R tools (https://github.com/PiotrTymoszuk/lm_qc_tools). For complete uni-variate modeling results, see: __Supplementary Table \@ref(tab:tab-uni-modeling)__.
+Correlation of the OMH, QoL, ANX and DPR scoring and the most influential factors identified by the random forest technique was assessed by age- and sex-weighted Poisson regression (generalized linear modeling, log link function). The frequency weights for the Austria/Tyrol and Italy/South Tyrol cohort were based on the age and sex distribution of COVID cases in Tyrol [@AustrianAgencyforHealthandFoodSafetyAGES] and Italy [@IstitutoSuperiorediSanitaISS], respectively[@Sahanic2021]. Significance of model estimates and their 95% confidence intervals were determined with Wald Z test. P values were corrected for multiple comparisons by Benjamini-Hochberg method [@Benjamini1995]. The correlation was deemed significant when significant association was present in both study cohorts. Model estimate extraction and visual quality control was accomplished with home-developed R tools (https://github.com/PiotrTymoszuk/lm_qc_tools). For complete univariable modeling results, see: __Supplementary Table \@ref(tab:tab-uni-modeling)__.
 
 Pooled Austria/Italy $\beta$ estimates referenced to in the text and presented in __Supplementary Table \@ref(tab:tab-pooled-beta)__ were calculated using inversed variance method and _meta_ package [@Borenstein2010;@Balduzzi2019].
 
@@ -113,9 +113,9 @@ suppl_tables$suppl_cohort_features %>%
         escape = F, 
         booktabs = T, 
         longtable = T) %>% 
-  column_spec(1, width = '2.5cm') %>% 
+  column_spec(1, width = '3.3cm') %>% 
   column_spec(2:3, width = '4cm') %>% 
-  column_spec(4, width = '1cm') %>% 
+  column_spec(4, width = '0.6cm') %>% 
   column_spec(5, width = '2cm') %>% 
   collapse_rows(columns = 1) %>% 
   kable_styling(full_width = F, 
@@ -197,6 +197,19 @@ suppl_tables$clust_freq[1, 1] %>%
 
 
 # Supplementary Figures {#sec:figures}
+
+```{r fig-overlap, fig.width = mm_inch(suppl_figures$overlap$w), fig.height = mm_inch(suppl_figures$overlap$h), dpi = 600, fig.cap = 'Co-occurrence of depression, anxiety, low rating of overall mental health and quality of life following COVID-19..'}
+
+suppl_figures$overlap$plot
+
+```
+
+__Supplementary Figure \@ref(fig:fig-overlap). Co-occurrence of depression, anxiety, low rating of overall mental health and quality of life following COVID-19.__
+
+Co-occurrence of positive depression screeining (DPR+), positive anxiety screening (ANX+), low rating of self-perceived overall mental health (OMH, rated as 'fair' or 'poor') and low rating of self-perceived quality of life (QoL, rated as 'fair' or 'poor') was measured with Cohen's kappa statistic and presented as a heat map. Statistical significance was determined by Z test and p values were corrected for multiple comparisons with Benjamini-Hochberg method. Tile color corresponds with the kappa value. Kappa values with 95% confidence intervals and p values are presented in the plot.
+
+
+\newpage
 
 ```{r fig-phq-anxiety-score-model, fig.width = mm_inch(suppl_figures$phq_anxiety_score_model$w), fig.height = mm_inch(suppl_figures$phq_anxiety_score_model$h), dpi = 600, fig.cap = 'Construction and performance of the anxiety scoring random forest models.'}
 
@@ -291,13 +304,13 @@ suppl_figures$clust_qc$plot
 
 __Supplementary Figure \@ref(fig:fig-clust-qc). Development of the mental disorder risk clusters.__
 
-Study participants were assigned to the Low Risk (LR), Intermediate Risk (IR) and High Risk (HR) subsets by clustering analysis of the most influential factors impacting on the net mental health scoring (__Figure 2__) with the self-organizing map (SOM, 11 $\times$ 11 hexagonal grid, Jaccard distance between participants) and the hierarchical clustering (Ward D2 method, Euclidean distance between the SOM nodes) algorithms as presented in __Figure 4__.
+Study participants were assigned to the Low Risk (LR), Intermediate Risk (IR) and High Risk (HR) subsets by clustering analysis of the most influential factors impacting the net mental health scoring (__Figure 2__) with the self-organizing map (SOM, 11 $\times$ 11 hexagonal grid, Jaccard distance between participants) and the hierarchical clustering (Ward D2 method, Euclidean distance between the SOM nodes) algorithms as presented in __Figure 4__.
 
 __(A)__ Progress of the SOM training procedure visualized as the drop of the mean distance to the winning unit with the algorithm iterations.
 
 __(B)__ Determination of the optimal cluster number in hierarchical clustering of the SOM nodes by finding the bend of the total within sum of square curve.
 
-__(B)__ Assignment of the SOM nodes to the clusters defined by hierarchical clustering presented in dendrograms.
+__(C)__ Assignment of the SOM nodes to the clusters defined by hierarchical clustering presented in dendrograms.
 
 \newpage
 

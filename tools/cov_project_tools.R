@@ -1755,6 +1755,84 @@
    }
 
    
+# Kappa and factor variable overlap -----
+   
+   get_kappa <- function(data, variable1, variable2, kappa_only = T) {
+      
+      ## calculates proportions and unweighted Cohen's Kappa for two variables
+
+      cross_tbl <- CrossTable(data[[variable1]], 
+                              data[[variable2]], 
+                              chisq = T)
+      
+      kappa_stat <- Kappa(cross_tbl$t)
+      
+      kappa_ci <- confint(kappa_stat)
+      
+      kappa_tbl <- tibble(kappa = kappa_stat[['Unweighted']][1], 
+                          se = kappa_stat[['Unweighted']][2]) %>% 
+         mutate(z = kappa/se, 
+                lower_ci = kappa_ci['Unweighted', 1], 
+                upper_ci = kappa_ci['Unweighted', 2], 
+                p_value = 2*pnorm(z, lower.tail = F), 
+                variable1 = variable1, 
+                variable2 = variable2) ## two-tailed z test
+      
+      if(kappa_only) {
+         
+         return(kappa_tbl)
+         
+      } else {
+         
+         return(list(cross_tbl = cross_tbl, 
+                     kappa = kappa_tbl))
+         
+      }
+      
+   }
+   
+   plot_kappa <- function(kappa_table, 
+                          plot_title = NULL, 
+                          plot_subtitle = NULL, 
+                          plot_tag = NULL) {
+      
+      ## plots kappas between variable pairs as a heat map
+      
+      kappa_hm <- kappa_table %>% 
+         mutate(plot_lab = paste0(signif(kappa, 2), 
+                                  '\n[', 
+                                  signif(lower_ci, 2), 
+                                  ' - ', 
+                                  signif(upper_ci, 2), 
+                                  ']\np = ', 
+                                  signif(p_adj, 2))) %>% 
+         ggplot(aes(x = variable2, 
+                    y = variable1,
+                    fill = kappa)) + 
+         geom_tile(color = 'gray40') + 
+         geom_text(aes(label = plot_lab), 
+                   size = 2.6) + 
+         scale_x_discrete(limits = overlap$mental_vars, 
+                          labels = overlap$mental_labs) + 
+         scale_y_discrete(limits = overlap$mental_vars, 
+                          label = overlap$mental_labs) + 
+         scale_fill_gradient2(low = 'steelblue', 
+                              mid = 'white', 
+                              high = 'firebrick', 
+                              name = 'Kappa', 
+                              midpoint = 0.5, 
+                              limits = c(0, 1)) + 
+         globals$common_theme + 
+         theme(axis.title = element_blank(), 
+               panel.grid.major = element_line(color = 'gray90')) + 
+         labs(title = plot_title, 
+              subtitle = plot_subtitle, 
+              tag = plot_tag)
+      
+      return(kappa_hm)
+      
+   }
+   
 # varia -----
    
    mm_inch <- function(input_mm) {

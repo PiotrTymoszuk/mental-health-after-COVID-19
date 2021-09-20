@@ -16,6 +16,9 @@
   render('./paper/figures_and_tables.Rmd', 
          output_format = pdf_document2(number_sections = F)) 
   
+  render('./paper/figures_and_tables.Rmd', 
+         output_format = word_document2(number_sections = F)) 
+  
 # rendering the supplementary material -----
   
   insert_msg('Rendering the supplementary material')

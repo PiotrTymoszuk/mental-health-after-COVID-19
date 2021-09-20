@@ -97,5 +97,3 @@
   save(clust_assignment, 
        file = 'clust_assign.RData')
   
-  
-  

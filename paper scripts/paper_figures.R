@@ -135,9 +135,26 @@
                      w = 180, 
                      h = 160)
   
-# Supplementary Figure S1 - S4: RF model performance ------
+# Supplementary Figure S1: overlap between the mental health features following COVID-19 -----
   
-  insert_msg('Figure S1 - S4. Random forest model performance')
+  insert_msg('Overlap betweem mental health features following COVID-19')
+  
+  suppl_figures$overlap <- plot_grid(overlap$plots$north + 
+                                       theme(legend.position = 'none'), 
+                                     overlap$plots$south + 
+                                       theme(legend.position = 'none'), 
+                                     ncol = 2) %>% 
+    plot_grid(., get_legend(overlap$plots$north + 
+                              theme(legend.position = 'bottom')), 
+              nrow = 2, 
+              rel_heights = c(0.85, 0.15)) %>% 
+    as_figure_object(figure_label = 'figure_s1_overlap', 
+                     w = 180, 
+                     h = 110)
+  
+# Supplementary Figure S2 - S5: RF model performance ------
+  
+  insert_msg('Figure S2 - S5. Random forest model performance')
   
   suppl_figures[c('mental_health_score_model', 
                   'life_quality_score_model', 
@@ -156,29 +173,29 @@
                                                                                labels = c('A', 'B'), 
                                                                                label_size = 10))
   
-  suppl_figures[c('mental_health_score_model', 
-                  'life_quality_score_model', 
-                  'phq_anxiety_score_model', 
-                  'phq_depression_score_model')] <- suppl_figures[c('mental_health_score_model', 
-                                                                    'life_quality_score_model', 
-                                                                    'phq_anxiety_score_model', 
-                                                                    'phq_depression_score_model')] %>%
+  suppl_figures[c('phq_anxiety_score_model', 
+                  'phq_depression_score_model', 
+                  'mental_health_score_model', 
+                  'life_quality_score_model')] <- suppl_figures[c('phq_anxiety_score_model', 
+                                                                    'phq_depression_score_model', 
+                                                                    'mental_health_score_model', 
+                                                                    'life_quality_score_model')] %>%
     map2(., 
          paste('figure_s', 
-               1:4, 
+               2:5, 
                '_', 
-               c('mental_health_score_model', 
-                 'life_quality_score_model', 
-                 'phq_anxiety_score_model', 
-                 'phq_depression_score_model'), 
+               c('phq_anxiety_score_model', 
+                 'phq_depression_score_model', 
+                 'mental_health_score_model', 
+                 'life_quality_score_model'), 
                sep = ''), 
          as_figure_object, 
          w = 180, 
          h = 210)
   
-# Supplementary Figure S5: pre-CoV depression/anxiety and the mental health scoring -----
+# Supplementary Figure S6: pre-CoV depression/anxiety and the mental health scoring -----
   
-  insert_msg('Figure S5: pre-CoV depression or anxiety and the mental health scoring')
+  insert_msg('Figure S6: pre-CoV depression or anxiety and the mental health scoring')
   
   suppl_figures$mental_health_scoring_da <- plot_grid(mqp_das_factors$depression_burnout$plot_panels$mental_health_score, 
                                                       mqp_das_factors$depression_burnout$plot_panels$life_quality_score, 
@@ -187,26 +204,9 @@
                                                       ncol = 2, 
                                                       labels = LETTERS, 
                                                       label_size = 10) %>% 
-    as_figure_object(figure_label = 'figure_s5_da_symptoms', 
+    as_figure_object(figure_label = 'figure_s6_da_symptoms', 
                      w = 180, 
                      h = 140)
-  
-# Supplementary Figure S6: pre-CoV depression/anxiety and the acute and persistent symptom burden -----
-  
-  insert_msg('Figure S6: pre-CoV depression or anxiety and acute symptoms')
-
-  suppl_figures$pre_cov_da_cov_sympt <- plot_grid(sympt_analyses$da$plot_panels$sum_symptoms_acute, 
-                                                  sympt_analyses$da$plot_panels$psychosom_acute_sympt_sum, 
-                                                  sympt_analyses$da$plot_panels$neurocognitive_acute_sympt_sum, 
-                                                  sympt_analyses$da$plot_panels$sum_symptoms_long, 
-                                                  sympt_analyses$da$plot_panels$psychosom_long_sympt_sum, 
-                                                  sympt_analyses$da$plot_panels$neurocognitive_long_sympt_sum, 
-                                                  ncol = 2, 
-                                                  labels = LETTERS, 
-                                                  label_size = 10) %>% 
-    as_figure_object(figure_label = 'figure_s6_pre_cov_da_acute_symptoms', 
-                     w = 180, 
-                     h = 228)
   
 # Supplementary Figure S7. Development of the participant clusters ------
   
@@ -268,7 +268,7 @@
                      w = 180, 
                      h = 220)
   
-# Supplementary Figure S9: Differences in other features between the clusters -----
+# Supplementary Figure S9: Differences in other features between the clusters-----
   
   insert_msg('Figure S9: Differences in other features between the clusters')
   
@@ -300,7 +300,8 @@
          target_folder = './paper/figures', 
          device = cairo_pdf)
   
-  suppl_figures[c('mental_health_score_model', 
+  suppl_figures[c('overlap', 
+                  'mental_health_score_model', 
                   'life_quality_score_model', 
                   'phq_anxiety_score_model', 
                   'phq_depression_score_model', 

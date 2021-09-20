@@ -19,6 +19,46 @@
                                                           list(psych_vars  = cohort_features$tables$psych_vars)), 
                                        hide_mean = c(T, T, F)) %>% 
     pmap(format_main_tbl)
+  
+  ## Table 1 and 2: no/yes removal, expanding the showtcuts
+  
+  paper_tables$cohort_features$baseline_vars <- paper_tables$cohort_features$baseline_vars %>% 
+    mutate(Variable = car::recode(Variable, 
+                                  "'Pre-CoV depression/anxiety' = 'Depression/anxiety before COVID-19'; 
+                                  'Pre-CoV sleep disorders' = 'Sleep disorders before COVID-19'"), 
+           Variable = stri_replace(Variable, 
+                                   fixed = 'Sum', 
+                                   replacement = 'Number'))  %>% 
+    map_dfc(stri_replace, 
+            regex = 'no:\\s{1}.*\\nyes:\\s{1}', 
+            replacement = '') 
+  
+  paper_tables$cohort_features$course_vars <- paper_tables$cohort_features$course_vars %>% 
+    mutate(Variable = stri_replace(Variable, 
+                                   fixed = 'NC', 
+                                   replacement = 'neurocognitive symptoms'), 
+           Variable = stri_replace(Variable, 
+                                   fixed = 'persist.', 
+                                   replacement = 'persistent'), 
+           Variable = stri_replace(Variable, 
+                                   fixed = '#', 
+                                   replacement = 'Number of')) %>% 
+    map_dfc(stri_replace, 
+            regex = 'no:\\s{1}.*\\nyes:\\s{1}', 
+            replacement = '')
+  
+  paper_tables$cohort_features$psych_vars <- paper_tables$cohort_features$psych_vars %>% 
+    mutate(Variable = car::recode(Variable, 
+                                  "'OMH score' = 'Overall Mental Health Score'; 
+                                  'QoL score' = 'Quality of Life Score';
+                                  'DPR score ' = 'Depression Score'; 
+                                  'DPR+' = 'Depression Screening-positive'; 
+                                  'ANX score' = 'Anxiety score'; 
+                                  'ANX+' = 'Anxiety Screening-positive'; 
+                                  'Stress score' = 'Psychosocial Stress Score'")) %>% 
+    map_dfc(stri_replace, 
+            regex = 'no:\\s{1}.*\\nyes:\\s{1}', 
+            replacement = '')
 
 # Supplementary Table S1: study variables used in model construction ------
   
@@ -42,6 +82,15 @@
   suppl_tables$suppl_cohort_features <- cohort_features$supplements %>% 
     reduce(rbind) %>% 
     format_main_tbl
+  
+  suppl_tables$suppl_cohort_features <- suppl_tables$suppl_cohort_features %>% 
+    mutate(Variable = car::recode(Variable, 
+                                  "'Freq. resp. infections' = '> 2 respiratory infections per year'; 
+                                  'Freq. bact. Infections' = '> 2 bacterial infections per year'; 
+                                  'Observation time' = 'Time between survey and diagnosis'"))  %>% 
+    map_dfc(stri_replace, 
+            regex = 'no:\\s{1}.*\\nyes:\\s{1}', 
+            replacement = '') 
   
 # Supplementary Table S3: results of univariate modeling -----
   
