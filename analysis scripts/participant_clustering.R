@@ -214,7 +214,7 @@
                                                 plot_title = globals$cohort_labs[names(partclust$prevalence_clust_features)]) %>% 
     pmap(plot_prevalence) %>% 
     map(function(x) x + 
-          scale_x_continuous(limits = c(0, 60), 
+          scale_x_continuous(limits = c(0, 65), 
                              breaks = seq(0, 60, by = 10)))
   
 # plotting mental health scoring in the clusters -----

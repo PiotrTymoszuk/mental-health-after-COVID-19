@@ -100,7 +100,7 @@
         var_label = translate_var(variable), 
         plot_label = paste(var_label, strata, sep = ':'))
 
-# representing the significant results in a bubble plot -----
+# representing the significant results in a pie plot -----
   
   insert_msg('Plotting the frequencies of the top significant factors in the mental disorder risk clusters')
   

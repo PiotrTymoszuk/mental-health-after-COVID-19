@@ -19,10 +19,14 @@
 
 # feature frequency or value analysis wrapper ----
    
-   analyze_split <- function(inp_data_list, var_lexicon, split_var, labeller, 
+   analyze_split <- function(inp_data_list, 
+                             var_lexicon, 
+                             split_var, 
+                             labeller, 
                              numeric_colors = NULL, 
                              numeric_y_lab = '# symptoms', 
                              numeric_test = 'u', 
+                             show_tag = F, 
                              x_lab = NULL, ...) {
       
       ## this function (a wrapper around counting and plotting function from the 'counting_tools.R')
@@ -186,13 +190,12 @@
       
       ## plot panels
       
-      if(!is.null(numeric_colors)) {
+      if(show_tag) {
          
          data_cont$plot_panels <- map2(data_cont$plots_north, 
                                        data_cont$plots_south, 
                                        function(x, y) plot_grid(x + theme(legend.position = 'none'), 
                                                                 y + theme(legend.position = 'none'), 
-                                                               # get_legend(x), 
                                                                 ncol = 2, 
                                                                 rel_widths = c(1, 1)))
          
@@ -201,9 +204,11 @@
          
          data_cont$plot_panels <- map2(data_cont$plots_north, 
                                        data_cont$plots_south, 
-                                       function(x, y) plot_grid(x + theme(legend.position = 'none'), 
-                                                                y + theme(legend.position = 'none'), 
-                                                               # ncol = 3, 
+                                       function(x, y) plot_grid(x + theme(legend.position = 'none', 
+                                                                          plot.tag = element_blank()), 
+                                                                y + theme(legend.position = 'none', 
+                                                                          plot.tag = element_blank()), 
+                                                                ncol = 2, 
                                                                 rel_widths = c(1, 1)))
          
          
@@ -1448,9 +1453,9 @@
                               midpoint = 0.5, 
                               name = '', 
                               breaks = c(0, 0.25, 0.5, 0.75, 1), 
-                              labels = c('Absent/none/cold-like', 
+                              labels = c('Absent/none', 
                                          rep('', 3), 
-                                         'Present/many/other')) + 
+                                         'Present/many')) + 
          coord_polar(theta = 'y') + 
          facet_grid(var_label ~ split_var) + 
          globals$common_theme + 
@@ -1910,5 +1915,19 @@
       return((vector - min(vector, na.rm = T))/(max(vector, na.rm = T) - min(vector, na.rm = T)))
       
    }
+   
+   get_tag <- function(plot) {
+      
+      ## extracts the plot tag and changes it's format for the figure panel
+      
+      plot_tag <- plot %>% 
+         ggplot_build
+      
+      plot_tag <- plot_tag$plot$labels$tag
+      
+      return(plot_tag)
+      
+   }
+   
    
 # END ----

@@ -137,7 +137,7 @@
   
 # Supplementary Figure S1: overlap between the mental health features following COVID-19 -----
   
-  insert_msg('Overlap betweem mental health features following COVID-19')
+  insert_msg('Figure S1: Overlap between mental health features following COVID-19')
   
   suppl_figures$overlap <- plot_grid(overlap$plots$north + 
                                        theme(legend.position = 'none'), 
@@ -152,9 +152,37 @@
                      w = 180, 
                      h = 110)
   
-# Supplementary Figure S2 - S5: RF model performance ------
+# Supplementary Figure S2: observation time and mental health rating -----
   
-  insert_msg('Figure S2 - S5. Random forest model performance')
+  insert_msg('Figure S2: observation time and mental health rating')
+  
+  suppl_figures$obs_time <- plot_grid(obs_time$analyses$plot_panels$phq_anxiety_score, 
+                                      obs_time$analyses$plot_panels$phq_depression_score, 
+                                      obs_time$analyses$plot_panels$mental_health_score, 
+                                      obs_time$analyses$plot_panels$life_quality_score, 
+                                      ncol = 1, 
+                                      labels = LETTERS, 
+                                      label_size = 10) %>% 
+    plot_grid(., 
+              ggdraw() + 
+                draw_text(text = paste0(paste0('\nAT:', get_tag(obs_time$analyses$plots_north$mental_health_score) %>% 
+                                                 stri_replace(fixed = '\n', 
+                                                              replacement = '')), 
+                                       paste0('\nIT:', get_tag(obs_time$analyses$plots_north$mental_health_score) %>% 
+                                                stri_replace(fixed = '\n', 
+                                                             replacement = ''))), 
+                          size = 8, 
+                          x = 0.2, 
+                          hjust = 0), 
+              nrow = 2, 
+              rel_heights = c(0.9, 0.1)) %>% 
+    as_figure_object(figure_label = 'figure_s2_obs_time', 
+                     w = 180,
+                     h = 220)
+  
+# Supplementary Figure S3 - S6: RF model performance ------
+  
+  insert_msg('Figure S3 - S6. Random forest model performance')
   
   suppl_figures[c('mental_health_score_model', 
                   'life_quality_score_model', 
@@ -193,9 +221,9 @@
          w = 180, 
          h = 210)
   
-# Supplementary Figure S6: pre-CoV depression/anxiety and the mental health scoring -----
+# Supplementary Figure S7: pre-CoV depression/anxiety and the mental health scoring -----
   
-  insert_msg('Figure S6: pre-CoV depression or anxiety and the mental health scoring')
+  insert_msg('Figure S7: pre-CoV depression or anxiety and the mental health scoring')
   
   suppl_figures$mental_health_scoring_da <- plot_grid(mqp_das_factors$depression_burnout$plot_panels$mental_health_score, 
                                                       mqp_das_factors$depression_burnout$plot_panels$life_quality_score, 
@@ -204,13 +232,13 @@
                                                       ncol = 2, 
                                                       labels = LETTERS, 
                                                       label_size = 10) %>% 
-    as_figure_object(figure_label = 'figure_s6_da_symptoms', 
+    as_figure_object(figure_label = 'figure_s7_da_symptoms', 
                      w = 180, 
                      h = 140)
   
-# Supplementary Figure S7. Development of the participant clusters ------
+# Supplementary Figure S8. Development of the participant clusters ------
   
-  insert_msg('Figure S7: Performance and QC of the clustering')
+  insert_msg('Figure S8: Performance and QC of the clustering')
   
   suppl_figures$clust_qc <- plot_grid(plot_train_som(partclust$clust_results$north$kohonen_obj) + 
                                         globals$common_theme + 
@@ -244,13 +272,13 @@
                                       align = 'hv', 
                                       labels = c('A', '', 'C', '', 'D'), 
                                       label_size = 10) %>% 
-    as_figure_object(figure_label = 'figure_s7_clustering_qc', 
+    as_figure_object(figure_label = 'figure_s8_clustering_qc', 
                      w = 180, 
                      h = 220)
   
-# Supplementary Figure S8: differences in clustering features between the risk clusters ----
+# Supplementary Figure S9: differences in clustering features between the risk clusters ----
   
-  insert_msg('Figure S8: clustering features in the risk clusters')
+  insert_msg('Figure S9: clustering features in the risk clusters')
   
   suppl_figures$clust_factors <- plot_grid(partclust$preval_plots_clust_features$north + 
                                              theme(plot.tag.position = 'right', 
@@ -264,13 +292,13 @@
                            theme(legend.position = 'bottom')), 
               nrow = 2, 
               rel_heights = c(0.95, 0.05)) %>% 
-    as_figure_object(figure_label = 'figure_s8_clustering_features', 
+    as_figure_object(figure_label = 'figure_s9_clustering_features', 
                      w = 180, 
                      h = 220)
   
-# Supplementary Figure S9: Differences in other features between the clusters-----
+# Supplementary Figure S10: Differences in other features between the clusters-----
   
-  insert_msg('Figure S9: Differences in other features between the clusters')
+  insert_msg('Figure S10: Differences in other features between the clusters')
   
   suppl_figures$other_factors_clusters <- plot_grid(clust_char$pie_plot$north + 
                                                       theme(legend.position = 'none'), 
@@ -282,7 +310,7 @@
                            theme(legend.position = 'bottom')), 
               nrow = 2, 
               rel_heights = c(0.95, 0.05)) %>% 
-    as_figure_object(figure_label = 'figure_s9_clust_frequency', 
+    as_figure_object(figure_label = 'figure_s10_clust_frequency', 
                      w = 180, 
                      h = 220)
   
@@ -301,6 +329,7 @@
          device = cairo_pdf)
   
   suppl_figures[c('overlap', 
+                  'obs_time', 
                   'mental_health_score_model', 
                   'life_quality_score_model', 
                   'phq_anxiety_score_model', 

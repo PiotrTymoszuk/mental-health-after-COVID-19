@@ -131,40 +131,9 @@
            `97.5% CI`, 
            Significance)
   
-# Supplementary Table S5: prevalence of PHQ depression and anxiety in the strata of interest -----
+# Supplementary Table S5: frequency of modeling features in the mental disorder risk clusters -----
   
-  insert_msg('Table S5: prevalence of PHQ depression and anxiety in the strata of interest')
-  
-  suppl_tables$da_prevalence <- das_prevalnce$result_tbl %>% 
-    mutate(variable = translate_var(variable, short = F),
-           strata = split_var) %>% 
-    map_dfc(stri_replace, 
-            fixed = ' da_significance (', 
-            replacement = '/n(') %>%
-    select(variable, 
-           strata, 
-           cohort, 
-           phq_anxiety_positive, 
-           phq_depression_positive, 
-           phq_anxiety_significance, 
-           phq_depression_significance) %>% 
-    mutate(cohort = ifelse(cohort == 'north', 
-                           'Austria', 
-                           'Italy'), 
-           variable = stri_replace(variable, 
-                                   fixed = 'depression/anxiety', 
-                                   replacement = 'depr/anx.')) %>% 
-    set_names(c('Variable',
-                'Strata', 
-                'Cohort', 
-                'Anx. prevalence', 
-                'Depr. prevalence',
-                'Anx. significance', 
-                'Depr. significance'))
-  
-# Supplementary Table S6: frequency of modeling features in the mental disorder risk clusters -----
-  
-  insert_msg('Table S6: frequency of the modeling features in the mental disorder risk clusters')
+  insert_msg('Table S5: frequency of the modeling features in the mental disorder risk clusters')
   
   suppl_tables$clust_freq <- clust_char$prevalence_signif %>% 
     mutate(cohort = car::recode(cohort, "'north' = 'Austria'; 'south' = 'Italy'"), 
@@ -201,7 +170,7 @@
     write_xlsx('./paper/tables/tables.xlsx')
   
   suppl_tables %>% 
-    set_names(paste('Table S', 1:6, sep = '')) %>% 
+    set_names(paste('Table S', 1:5, sep = '')) %>% 
     write_xlsx('./paper/supplementary tables/supplementary_tables.xlsx')
   
 # END -----

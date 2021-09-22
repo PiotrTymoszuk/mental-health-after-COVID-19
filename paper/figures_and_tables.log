@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.9.1)  13 SEP 2021 09:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.9.1)  22 SEP 2021 12:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -726,20 +726,57 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 {c:/Users/piotr/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}]
+Overfull \hbox (1.59483pt too wide) in paragraph at lines 99--99
+[]|\T1/lmr/m/n/10 Test|  
+ []
+
+
+Overfull \hbox (1.59483pt too wide) in paragraph at lines 104--104
+[]|\T1/lmr/m/n/10 Test|  
+ []
+
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 111.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 111.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <5> on input line 111.
-[2] [3] [4] [5]
+[2] [3]
+Overfull \hbox (1.59483pt too wide) in paragraph at lines 149--149
+[]|\T1/lmr/m/n/10 Test|  
+ []
+
+
+Overfull \hbox (1.59483pt too wide) in paragraph at lines 154--154
+[]|\T1/lmr/m/n/10 Test|  
+ []
+
+
+Overfull \vbox (12.0pt too high) detected at line 167
+ []
+
+
+Overfull \vbox (12.0pt too high) detected at line 175
+ []
+
+[4]
+Overfull \hbox (1.59483pt too wide) in paragraph at lines 183--183
+[]|\T1/lmr/m/n/10 Test|  
+ []
+
+
+Overfull \hbox (1.59483pt too wide) in paragraph at lines 188--188
+[]|\T1/lmr/m/n/10 Test|  
+ []
+
+[5]
 <figures_and_tables_files/figure-latex/fig-consort-1.pdf, id=48, 511.9125pt x 5
 11.9125pt>
 File: figures_and_tables_files/figure-latex/fig-consort-1.pdf Graphic file (typ
 e pdf)
 <use figures_and_tables_files/figure-latex/fig-consort-1.pdf>
 Package pdftex.def Info: figures_and_tables_files/figure-latex/fig-consort-1.pd
-f  used on input line 219.
+f  used on input line 223.
 (pdftex.def)             Requested size: 469.75449pt x 469.75449pt.
 [6 <./figures_and_tables_files/figure-latex/fig-consort-1.pdf>]
 <figures_and_tables_files/figure-latex/fig-rf-components-1.pdf, id=62, 511.9125
@@ -748,7 +785,7 @@ File: figures_and_tables_files/figure-latex/fig-rf-components-1.pdf Graphic fil
 e (type pdf)
 <use figures_and_tables_files/figure-latex/fig-rf-components-1.pdf>
 Package pdftex.def Info: figures_and_tables_files/figure-latex/fig-rf-component
-s-1.pdf  used on input line 229.
+s-1.pdf  used on input line 233.
 (pdftex.def)             Requested size: 469.75449pt x 417.2525pt.
 [7 <./figures_and_tables_files/figure-latex/fig-rf-components-1.pdf>]
 <figures_and_tables_files/figure-latex/fig-uni-modeling-1.pdf, id=85, 511.9125p
@@ -757,7 +794,7 @@ File: figures_and_tables_files/figure-latex/fig-uni-modeling-1.pdf Graphic file
  (type pdf)
 <use figures_and_tables_files/figure-latex/fig-uni-modeling-1.pdf>
 Package pdftex.def Info: figures_and_tables_files/figure-latex/fig-uni-modeling
--1.pdf  used on input line 243.
+-1.pdf  used on input line 247.
 (pdftex.def)             Requested size: 469.75449pt x 595.02235pt.
 [8 <./figures_and_tables_files/figure-latex/fig-uni-modeling-1.pdf>] [9]
 <figures_and_tables_files/figure-latex/fig-clustering-1.pdf, id=117, 511.9125pt
@@ -766,7 +803,7 @@ File: figures_and_tables_files/figure-latex/fig-clustering-1.pdf Graphic file (
 type pdf)
 <use figures_and_tables_files/figure-latex/fig-clustering-1.pdf>
 Package pdftex.def Info: figures_and_tables_files/figure-latex/fig-clustering-1
-.pdf  used on input line 257.
+.pdf  used on input line 261.
 (pdftex.def)             Requested size: 469.75449pt x 417.2525pt.
 [10 <./figures_and_tables_files/figure-latex/fig-clustering-1.pdf>]
 <figures_and_tables_files/figure-latex/fig-clust-mental-1.pdf, id=140, 511.9125
@@ -775,7 +812,7 @@ File: figures_and_tables_files/figure-latex/fig-clust-mental-1.pdf Graphic file
  (type pdf)
 <use figures_and_tables_files/figure-latex/fig-clust-mental-1.pdf>
 Package pdftex.def Info: figures_and_tables_files/figure-latex/fig-clust-mental
--1.pdf  used on input line 271.
+-1.pdf  used on input line 275.
 (pdftex.def)             Requested size: 469.75449pt x 469.75449pt.
 [11 <./figures_and_tables_files/figure-latex/fig-clust-mental-1.pdf>] [12]
 <figures_and_tables_files/figure-latex/pre-cov-da-cov-sympt-1.pdf, id=167, 511.
@@ -784,7 +821,7 @@ File: figures_and_tables_files/figure-latex/pre-cov-da-cov-sympt-1.pdf Graphic
 file (type pdf)
 <use figures_and_tables_files/figure-latex/pre-cov-da-cov-sympt-1.pdf>
 Package pdftex.def Info: figures_and_tables_files/figure-latex/pre-cov-da-cov-s
-ympt-1.pdf  used on input line 289.
+ympt-1.pdf  used on input line 293.
 (pdftex.def)             Requested size: 469.75449pt x 417.2525pt.
 [13 <./figures_and_tables_files/figure-latex/pre-cov-da-cov-sympt-1.pdf>] (./fi
 gures_and_tables.aux)
@@ -797,7 +834,7 @@ Package rerunfilecheck Info: File `figures_and_tables.out' has not changed.
 Here is how much of TeX's memory you used:
  13249 strings out of 480559
  202813 string characters out of 5901781
- 539731 words of memory out of 5000000
+ 537794 words of memory out of 5000000
  30587 multiletter control sequences out of 15000+600000
  453078 words of font info for 67 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -816,7 +853,7 @@ xmf-dist/fonts/type1/public/lm/lmr17.pfb><c:/Users/piotr/AppData/Roaming/TinyTe
 X/texmf-dist/fonts/type1/public/lm/lmr7.pfb><c:/Users/piotr/AppData/Roaming/Tin
 yTeX/texmf-dist/fonts/type1/public/lm/lmri10.pfb><c:/Users/piotr/AppData/Roamin
 g/TinyTeX/texmf-dist/fonts/type1/public/lm/lmsy10.pfb>
-Output written on figures_and_tables.pdf (13 pages, 790818 bytes).
+Output written on figures_and_tables.pdf (13 pages, 791019 bytes).
 PDF statistics:
  242 PDF objects out of 1000 (max. 8388607)
  176 compressed objects within 2 object streams

@@ -17,7 +17,8 @@
     './analysis scripts/das_positive_interest.R', 
     './analysis scripts/participant_clustering.R', 
     './analysis scripts/cluster_characteristic.R', 
-    './analysis scripts/overlap.R') %>% 
+    './analysis scripts/overlap.R', 
+    './analysis scripts/obs_time.R') %>% 
     walk(source)
 
 # END -----
