@@ -1,0 +1,254 @@
+---
+title: "Who is at risk of poor mental health following COVID-19 outpatient management?"
+subtitle: "Figures and Tables"
+author: "Health after COVID-19 in Tyrol study team"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+
+output: 
+  pdf_document:
+    latex_engine: xelatex
+bibliography: cov_biblio.bib
+csl: frontiers-in-medicine.csl
+header-includes:
+  \usepackage{longtable}
+  \usepackage{tabu}
+  \usepackage{caption}
+  \usepackage{makecell}
+  \usepackage{pdflscape}
+  \usepackage{array}
+  \usepackage{booktabs}
+  \usepackage{threeparttable}
+  \usepackage{threeparttablex}
+  \usepackage{wrapfig}
+  \usepackage{multirow}
+  \usepackage[normalem]{ulem}
+  \usepackage{colortbl}
+  \usepackage{xcolor}
+  \usepackage{float} \floatplacement{figure}{H} \floatplacement{table}{H}
+  \newcommand{\beginsupplement}{\setcounter{table}{0}  \renewcommand{\thetable}{S\arabic{table}}       \setcounter{figure}{0} \renewcommand{\thefigure}{S\arabic{figure}}}
+---
+
+```{r, setup, include = FALSE}
+
+library(bookdown)
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, dev = "cairo_pdf")
+
+
+```
+
+\newpage
+
+# Tables {#sec:tbl}
+
+```{r tab-baseline-features, tab.cap = "Baseline characteristic of the study cohorts."}
+
+paper_tables$table1 %>%
+  flextable %>% 
+  theme_vanilla %>% 
+  width(1, width = 2.7, unit = 'cm') %>% 
+  width(2:3, width = 4.5, unit = 'cm') %>% 
+  width(4, width = 1.9, unit = 'cm') %>% 
+  width(5, width = 2.2, unit = 'cm') %>% 
+  width(6, width = 2, unit = 'cm') %>% 
+  merge_v(j = 1) %>% 
+  footnote(i = 1, 
+           j = 2:3, 
+           value = as_paragraph('For categorical variables: percentage of the complete answers (n individuals). AT: Austria/Tyrol cohort, IT: Italy/South Tyrol cohort.'), 
+           part = 'header', 
+           ref_symbols = '1') %>% 
+  footnote(i = 1, 
+           j = 4, 
+           part = 'header', 
+           value = as_paragraph('Statistical test used for the AT vs IT comparison.'), 
+           ref_symbols = '2') %>% 
+  footnote(i = 1, 
+           j = 5, 
+           part = 'header', 
+           value = as_paragraph('Test p value corrected for multiple comparisons with Benjamini-Hochberg (FDR) method'), 
+           ref_symbols = '3') %>% 
+  footnote(i = 1, 
+           j = 6, 
+           part = 'header', 
+           value = as_paragraph("Effect size: Wilcoxon r or Cramer's V."), 
+           ref_symbols = '4')
+
+```
+
+\newpage
+
+```{r tab-cov-course, tab.cap = "Characteristic of the course of SARS-CoV2 infection and convalescence in the study cohorts."}
+
+paper_tables$table2 %>%
+  flextable %>% 
+  theme_vanilla %>% 
+  width(1, width = 2.7, unit = 'cm') %>% 
+  width(2:3, width = 4.5, unit = 'cm') %>% 
+  width(4, width = 1.9, unit = 'cm') %>% 
+  width(5, width = 2.2, unit = 'cm') %>% 
+  width(6, width = 2, unit = 'cm') %>% 
+  merge_v(j = 1) %>% 
+  footnote(i = 1, 
+           j = 2:3, 
+           value = as_paragraph('Percentage of the complete answers (n individuals). AT: Austria/Tyrol cohort, IT: Italy/South Tyrol cohort.'), 
+           part = 'header', 
+           ref_symbols = '1') %>% 
+  footnote(i = 1, 
+           j = 4, 
+           part = 'header', 
+           value = as_paragraph('Statistical test used for the AT vs IT comparison.'), 
+           ref_symbols = '2') %>% 
+  footnote(i = 1, 
+           j = 5, 
+           part = 'header', 
+           value = as_paragraph('Test p value corrected for multiple comparisons with Benjamini-Hochberg (FDR) method'), 
+           ref_symbols = '3') %>% 
+  footnote(i = 1, 
+           j = 6, 
+           part = 'header', 
+           value = as_paragraph("Effect size: Wilcoxon r or Cramer's V."), 
+           ref_symbols = '4')
+
+```
+
+\newpage
+
+```{r tab-mental-scoring, tab.cap = "Rating of the mental health following COVID-19 in the study cohorts."}
+
+paper_tables$table3 %>%
+  flextable %>% 
+  theme_vanilla %>% 
+  width(1, width = 2.7, unit = 'cm') %>% 
+  width(2:3, width = 4.5, unit = 'cm') %>% 
+  width(4, width = 1.9, unit = 'cm') %>% 
+  width(5, width = 2.2, unit = 'cm') %>% 
+  width(6, width = 2, unit = 'cm') %>% 
+  merge_v(j = 1) %>% 
+  footnote(i = 1, 
+           j = 2:3, 
+           value = as_paragraph('Percentage of the complete answers (n individuals). AT: Austria/Tyrol cohort, IT: Italy/South Tyrol cohort.'), 
+           part = 'header', 
+           ref_symbols = '1') %>% 
+  footnote(i = 1, 
+           j = 4, 
+           part = 'header', 
+           value = as_paragraph('Statistical test used for the AT vs IT comparison.'), 
+           ref_symbols = '2') %>% 
+  footnote(i = 1, 
+           j = 5, 
+           part = 'header', 
+           value = as_paragraph('Test p value corrected for multiple comparisons with Benjamini-Hochberg (FDR) method'), 
+           ref_symbols = '3') %>% 
+  footnote(i = 1, 
+           j = 6, 
+           part = 'header', 
+           value = as_paragraph("Effect size: Wilcoxon r or Cramer's V"), 
+           ref_symbols = '4')
+
+```
+
+\newpage
+
+# Figures {#sec:figures}
+
+```{r fig-consort, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Study inclusion flow diagram.'}
+
+paper_figures$consort$plot
+
+```
+
+__Figure \@ref(fig:fig-consort). Study inclusion flow diagram.__
+
+\newpage
+
+```{r fig-rf-components, fig.width = 7.086614166, fig.height = 6.299212592, fig.cap = 'Random Forest modeling of the mental health and quality of life scoring during COVID-19 convalescence.'}
+
+paper_figures$rf_components$plot
+
+```
+
+__Figure \@ref(fig:fig-rf-components). Random Forest modeling of the mental health and quality of life scoring during COVID-19 convalescence.__
+
+The effects of `r length(globals$variables)` demographic, clinical, socioeconomic and psychosocial factors (__Supplementary Table S1__) on the anxiety (ANX), depression (DPR), overall mental health (OMH) and quality of life (QoL) scoring were modeled with Random Forest technique. Numeric variables were minimum/maximum normalized prior to modeling. The models were trained and calibrated in the Austria (AT) cohort, 10-fold cross-validated (CV) and their predictions validated in the Italy (IT) cohort. The top 20 most influential explanatory variables were identified in the AT cohort for each mental health and life quality score by unbiased $\Delta$MSE statistic (__Supplementary Figures S6 - S9__ ). Numbers of complete observations are indicated in (__A__).
+
+__(A)__ Random Forest model performance measured by root mean squared error (RMSE) and the fraction of explained variance in mental health and quality of life scoring expressed as R^2^.
+
+__(B)__ Identification of common influential explanatory variables. Left: overlap in the top 20 most influential explanatory variables presented in a quasi-proportional Venn plot. Right: $\Delta$MSE statistics for the most influential explanatory statistics shared by all responses, point size and color corresponds to the $\Delta$MSE value.
+
+NC: neurocognitive symptoms, imp. conc.: impaired concentration, phys.: physical, #: number of.
+
+\newpage
+
+```{r fig-uni-modeling, fig.width = 7.086614166, fig.height = 8.267716527, fig.cap = 'Association of the most influential factors with the mental health readouts investigated by univariable modeling.'}
+
+paper_figures$uni_modeling$plot
+
+```
+
+__Figure \@ref(fig:fig-uni-modeling). Association of the most influential factors with the mental health readouts investigated by univariable modeling.__
+
+Association of the most influential factors for the mental health and quality of life scoring (__Figure \@ref(fig:fig-rf-components)B__) with the anxiety (ANX) (__A__), depression (DPR) (__B__), overall mental health (OMH) (__C__) and quality of life (QoL) (__D__) rating was investigated by univariable, age- and sex-weighted Poisson regression (__Supplementary Table S2__). Numeric variables were minimum/maximum normalized prior to modeling. Exponent $\beta$ estimate values with 95$\%$ confidence intervals presented as Forest plots. Explained variance fraction estimated by adjusted R^2^ is presented in adjunct bar plots. Numbers of complete observations are shown under the plots. AT: Austria, IT: Italy.
+
+NC: neurocognitive symptoms, imp. conc.: impaired concentration, phys.: physical, #: number of.
+
+\newpage
+
+```{r fig-clustering, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Clustering of the study participants by the most influential factors affecting the mental health and quality of life scoring.'}
+
+paper_figures$clustering$plot
+
+```
+
+__Figure \@ref(fig:fig-clustering). Clustering of the study participants by the most influential factors affecting the mental health and quality of life scoring.__
+
+Study participants were assigned to the Low Risk (LR), Intermediate Risk (IR) and High Risk (HR) subsets by clustering in respect to the most influential factors for the mental health and quality of life scoring (__Figure \@ref(fig:fig-rf-components)B__). Numeric variables were minimum/maximum normalized prior to modeling. The procedure in the training Austria (AT) cohort involved the self-organizing map (SOM, 13 $\times$ 13 hexagonal grid, Manhattan distance between participants) and the hierarchical clustering (Ward D2 method, Manhattan distance between the SOM nodes) algorithms. Assignment of the Italy (IT) cohort participants to the clusters was accomplished by the k-nearest neighbors classification. Numbers of participants assigned to the clusters are presented in (__B__).
+
+__(A)__ Cluster assignment of the participants in the 3-dimensional principal component (PC) analysis score plot. First two components are shown. Percentages of the data set variance associated with the particular PC are presented in the plot axes.
+
+__(B)__ Heat map of the minimum/maximum-normalized clustering features.
+
+NC: neurocognitive symptoms, imp. conc.: impaired concentration, phys.: physical, #: number of.
+
+\newpage
+
+```{r fig-clust-mental, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Mental health and quality of life scoring, depression and anxiety prevalence in the mental disorder risk clusters.'}
+
+paper_figures$clust_mental$plot
+
+```
+
+__Figure \@ref(fig:fig-clust-mental). Mental health and quality of life scoring, depression and anxiety prevalence in the mental disorder risk clusters.__
+
+Study participants were assigned to the Low Risk (LR), Intermediate Risk (IR) and High Risk (HR) subsets as presented in __Figure \@ref(fig:fig-clustering)__. Numbers of participants assigned to the clusters are presented in (__E__).
+
+__(A - D)__ Rating of anxiety (ANX) (__A__), depression (DPR) (__B__), overall mental health (OMH) (__C__) and quality of life (QoL) (__D__) in the clusters presented as violin plots, diamonds with whiskers represent medians with IQRs. Statistical significance was assessed by Kruskal-Wallis test. P values corrected for multiple testing with Benjamini-Hochberg method and $\eta^2$ effect size statistic values are shown in the plot captions
+
+__(B)__ Frequency of positive depression (DPR+) and anxiety (ANX+) screening in the clusters. Statistical significance was assessed by Benjamini-Hochberg-corrected $\chi^2$ test, effect size was expressed as Cramer's V.
+
+\newpage
+
+```{r fig-pre-cov-da, fig.width = 7.086614166, fig.height = 8.661417314, fig.cap = 'Characteristic of baseline features, COVID-19 course and recovery in participants with pre-existing depression or anxiety.'}
+
+paper_figures$pre_cov_da$plot
+
+```
+
+__Figure \@ref(fig:fig-pre-cov-da). Characteristic of baseline features, COVID-19 course and recovery in participants with pre-existing depression or anxiety.__
+
+Differences in baseline characteristic, COVID-19 course, recovery, mental health and quality of life scoring between the participants with pre-existing depression or anxiety (DA+) and the subjects without mental disorder history (DA-) were assessed by $\chi^2$ or Mann-Whitney test in the Austria (AT) and Italy (IT) cohort. The testing results were corrected form multiple testing with Benjamini-Hochberg method (FDR: False Discovery Rate). Numbers of DA+ and DA- participants are shown in (__A__).
+
+__(A)__ Multiple testing-adjusted significance (pFDR) and effect size (categorical: Cramer's V for categorical factors, numeric features: Wilcoxon r) for the investigated variables. Variables significantly different between DA+ and DA- are highlighted in red.
+
+__(B)__ Values of the features significantly different between DA+ and DA- participants in both AT and IT collectives presented in violin plots. The numeric features were minimum/maximum normalized. Orange diamonds represent mode (categorical variables) or median values (numeric variables).
+
+pre-CoV: before COVID-19, sleep disord.: sleep disorder, freq. resp. inf.: > 2 respiratory infections per yes before COVID-19, daily medic.: number of drugs taken daily, comorb.: comorbidities, #: number of, QoL: quality of life, OMH: overall mental health, ANX: anxiety, NC: neurocognitive symptoms.
+
+\newpage
+
+```{r fig-summary, fig.width = 7.086614166, fig.height = 4.330708657, fig.cap = 'Summary of the study results.'}
+
+paper_figures$summary$plot
+
+```
+
+__Figure \@ref(fig:fig-summary). Summary of the study results.__

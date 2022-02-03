@@ -2,10 +2,6 @@
 
   insert_head()
 
-# tools ------
-
-  library(writexl)  
-
 # data containers -----
 
   paper_tables <- list()
@@ -15,50 +11,27 @@
   
   insert_msg('Table 1 - 3: cohort characteristic')
   
-  paper_tables$cohort_features <- list(analysis_table = c(cohort_features$main_tables, 
-                                                          list(psych_vars  = cohort_features$tables$psych_vars)), 
-                                       hide_mean = c(T, T, F)) %>% 
-    pmap(format_main_tbl)
+  paper_tables$cohort_features <- eda_comp$cohort_characteristic %>% 
+    select(variable, 
+           north, 
+           south, 
+           test, 
+           significance, 
+           eff_size)
+
+  ## splitting into single tables
   
-  ## Table 1 and 2: no/yes removal, expanding the showtcuts
+  paper_tables <- eda_globals$globals_tbl %>% 
+    dlply(.(target_table), function(x) x$variable) %>% 
+    map(~filter(paper_tables$cohort_features, 
+                variable %in% .x)) %>% 
+    map(format_main_tbl)
+
+  ## renaming
   
-  paper_tables$cohort_features$baseline_vars <- paper_tables$cohort_features$baseline_vars %>% 
-    mutate(Variable = car::recode(Variable, 
-                                  "'Pre-CoV depression/anxiety' = 'Depression/anxiety before COVID-19'; 
-                                  'Pre-CoV sleep disorders' = 'Sleep disorders before COVID-19'"), 
-           Variable = stri_replace(Variable, 
-                                   fixed = 'Sum', 
-                                   replacement = 'Number'))  %>% 
-    map_dfc(stri_replace, 
-            regex = 'no:\\s{1}.*\\nyes:\\s{1}', 
-            replacement = '') 
-  
-  paper_tables$cohort_features$course_vars <- paper_tables$cohort_features$course_vars %>% 
-    mutate(Variable = stri_replace(Variable, 
-                                   fixed = 'NC', 
-                                   replacement = 'neurocognitive symptoms'), 
-           Variable = stri_replace(Variable, 
-                                   fixed = 'persist.', 
-                                   replacement = 'persistent'), 
-           Variable = stri_replace(Variable, 
-                                   fixed = '#', 
-                                   replacement = 'Number of')) %>% 
-    map_dfc(stri_replace, 
-            regex = 'no:\\s{1}.*\\nyes:\\s{1}', 
-            replacement = '')
-  
-  paper_tables$cohort_features$psych_vars <- paper_tables$cohort_features$psych_vars %>% 
-    mutate(Variable = car::recode(Variable, 
-                                  "'OMH score' = 'Overall Mental Health Score'; 
-                                  'QoL score' = 'Quality of Life Score';
-                                  'DPR score ' = 'Depression Score'; 
-                                  'DPR+' = 'Depression Screening-positive'; 
-                                  'ANX score' = 'Anxiety score'; 
-                                  'ANX+' = 'Anxiety Screening-positive'; 
-                                  'Stress score' = 'Psychosocial Stress Score'")) %>% 
-    map_dfc(stri_replace, 
-            regex = 'no:\\s{1}.*\\nyes:\\s{1}', 
-            replacement = '')
+  paper_tables <- paper_tables %>% 
+    map(set_names, 
+        c('Variable', 'AT', 'IT', 'Test', 'pFDR', 'Effect size'))
 
 # Supplementary Table S1: study variables used in model construction ------
   
@@ -74,104 +47,86 @@
                 'Short label', 
                 'Variable strata', 
                 'Description'))
-  
-# Supplementary Table S2: supplementary cohort characteristic and COVID-19 course -----
-  
-  insert_msg('Table S2: supplementary cohort characteristic of the cohort and COVID-19 course')
-  
-  suppl_tables$suppl_cohort_features <- cohort_features$supplements %>% 
-    reduce(rbind) %>% 
-    format_main_tbl
-  
-  suppl_tables$suppl_cohort_features <- suppl_tables$suppl_cohort_features %>% 
-    mutate(Variable = car::recode(Variable, 
-                                  "'Freq. resp. infections' = '> 2 respiratory infections per year'; 
-                                  'Freq. bact. Infections' = '> 2 bacterial infections per year'; 
-                                  'Observation time' = 'Time between survey and diagnosis'"))  %>% 
-    map_dfc(stri_replace, 
-            regex = 'no:\\s{1}.*\\nyes:\\s{1}', 
-            replacement = '') 
-  
-# Supplementary Table S3: results of univariate modeling -----
-  
-  insert_msg('Table S3: results of univariate modeling')
-  
-  suppl_tables$uni_modeling <- psych_analyses$summary_tbl %>% 
-    format_res_tbl %>% 
-    select(`Co-variate`, 
-           Response, 
-           Cohort, 
-           N, 
-           `Exp. estimate`, 
-           `2.5% CI`, 
-           `97.5% CI`, 
-           Significance) %>% 
-    mutate(`Co-variate` = stri_replace(`Co-variate`, 
-                                       fixed = ': yes', 
-                                       replacement = ''))
 
-# Supplementary Table S4: pooled results of univariate modeling -----
+# Supplementary Table S2: results of univariate modeling -----
   
-  insert_msg('Table S4: pooled results of uni-variate modeling')
+  insert_msg('Table S2: results of univariate modeling')
   
-  suppl_tables$pooled_univariate <- psych_analyses$pooled_summary %>% 
-    select( - p_adj) %>% 
-    ddply(.(response), 
-          filter, 
-          !duplicated(parameter)) %>% 
-    as_tibble %>% 
-    mutate(p_adj = p.adjust(p_value, 'BH')) %>% 
-    format_res_tbl %>% 
-    arrange(`Co-variate`, 
-            Response) %>% 
-    select(`Co-variate`, 
-           Response, 
-           `Exp. estimate`, 
-           `2.5% CI`, 
-           `97.5% CI`, 
-           Significance)
+  suppl_tables$uni_modeling <- psych_analyses$mod_summary[c('cohort', 
+                                                            'response', 
+                                                            'variable', 
+                                                            'level', 
+                                                            'n', 
+                                                            'n_complete', 
+                                                            'estimate', 
+                                                            'lower_ci', 
+                                                            'upper_ci', 
+                                                            'p_adj')] %>% 
+    left_join(psych_analyses$fit_stats[c('cohort', 
+                                         'response', 
+                                         'variable', 
+                                         'adj_rsq')], 
+              by = c('cohort', 'response', 'variable'))
   
-# Supplementary Table S5: frequency of modeling features in the mental disorder risk clusters -----
-  
-  insert_msg('Table S5: frequency of the modeling features in the mental disorder risk clusters')
-  
-  suppl_tables$clust_freq <- clust_char$prevalence_signif %>% 
-    mutate(cohort = car::recode(cohort, "'north' = 'Austria'; 'south' = 'Italy'"), 
-           significance = ifelse(p_adj >= 0.05, 'ns', 
-                                 paste('p =', signif(p_adj, 2))), 
+  suppl_tables$uni_modeling <- suppl_tables$uni_modeling %>% 
+    mutate(cohort = globals$cohort_labs[cohort], 
+           response = globals$response_labels[response], 
            variable = translate_var(variable), 
-           frequency = paste0(signif(percent, 3), 
-                              '% (', 
-                              n, 
-                              ')')) %>% 
-    select(variable, 
-           strata, 
-           cohort, 
-           split_var, 
-           frequency, 
-           total_n, 
+           variable = ifelse(level == 'yes' | is.na(level), 
+                             variable, 
+                             paste(variable, level, sep = ': ')), 
+           estimate = paste0(signif(estimate, 2), ' [', 
+                             signif(lower_ci, 2), ' - ', 
+                             signif(upper_ci, 2), ']'), 
+           adj_rsq = signif(adj_rsq, 2), 
+           significance = ifelse(p_adj < 0.05, 
+                                 paste('p =', signif(p_adj, 2)), 
+                                 paste0('ns (p = ', signif(p_adj, 2), ')'))) %>% 
+    select(cohort, 
+           response, 
+           variable, 
+           n, 
+           n_complete, 
+           estimate, 
+           adj_rsq, 
            significance) %>% 
-    set_names(c('Variable', 
-                'Strata', 
-                'Cohort', 
-                'Cluster', 
-                'Frequency', 
-                'N', 
-                'Significance'))
+    set_names(c('Cohort', 
+                'Response', 
+                'Indep. variable', 
+                'N variable level', 
+                'Complete observations', 
+                'exp \u03B2', 
+                'R\u00B2', 
+                'pFDR'))
+  
+# Supplementary Table S3: characteristic of the subsets with and without pre-CoV depression/anxiety, significant features ----
+  
+  insert_msg('Table S3. Characteristic of the population with and without depression/anxiety')
+  
+  suppl_tables$da_features <- pheno_da$descr_tbl %>% 
+    map2_dfr(., names(.), ~mutate(.x, cohort = .y)) %>% 
+    format_main_tbl %>% 
+    mutate(cohort = globals$cohort_labs[cohort]) %>% 
+    select(cohort, 
+           variable, 
+           da_negative, 
+           da_positive, 
+           test, 
+           significance, 
+           eff_size) %>% 
+    set_names(c('Cohort', 'Variable', 'DA-negative', 'DA-positive', 'Test', 'pFDR', 'Effect size'))
   
 # saving the tables ----
   
   insert_msg('Saving the tables in the disc')
   
-  paper_tables$cohort_features[c('baseline_vars', 
-                                 'course_vars', 
-                                 'psych_vars')] %>% 
-    set_names(paste('Table', 1:3)) %>% 
-    write_xlsx('./paper/tables/tables.xlsx')
-  
+  paper_tables %>% 
+    set_names(paste('Table', 1:length(paper_tables))) %>% 
+    write_xlsx('./paper/tables.xlsx')
+
   suppl_tables %>% 
-    set_names(paste('Table S', 1:5, sep = '')) %>% 
-    write_xlsx('./paper/supplementary tables/supplementary_tables.xlsx')
+    set_names(paste('Table S', 1:length(suppl_tables), sep = '')) %>% 
+    write_xlsx('./paper/supplementary_tables.xlsx')
   
 # END -----
   

@@ -1,0 +1,68 @@
+```{r fig-consort, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Study inclusion flow diagram.'}
+
+paper_figures$consort$plot
+
+```
+
+__Figure \@ref(fig:fig-consort). Study inclusion flow diagram.__
+
+
+
+```{r fig-rf-components, fig.width = 7.086614166, fig.height = 6.299212592, fig.cap = 'Random Forest modeling of the mental health and quality of life scoring during COVID-19 convalescence.'}
+
+paper_figures$rf_components$plot
+
+```
+
+__Figure \@ref(fig:fig-rf-components). Random Forest modeling of the mental health and quality of life scoring during COVID-19 convalescence.__
+
+
+
+```{r fig-uni-modeling, fig.width = 7.086614166, fig.height = 8.267716527, fig.cap = 'Association of the most influential factors with the mental health readouts investigated by univariable modeling.'}
+
+paper_figures$uni_modeling$plot
+
+```
+
+__Figure \@ref(fig:fig-uni-modeling). Association of the most influential factors with the mental health readouts investigated by univariable modeling.__
+
+
+
+```{r fig-clustering, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Clustering of the study participants by the most influential factors affecting the mental health and quality of life scoring.'}
+
+paper_figures$clustering$plot
+
+```
+
+__Figure \@ref(fig:fig-clustering). Clustering of the study participants by the most influential factors affecting the mental health and quality of life scoring.__
+
+
+
+```{r fig-clust-mental, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Mental health and quality of life scoring, depression and anxiety prevalence in the mental disorder risk clusters.'}
+
+paper_figures$clust_mental$plot
+
+```
+
+__Figure \@ref(fig:fig-clust-mental). Mental health and quality of life scoring, depression and anxiety prevalence in the mental disorder risk clusters.__
+
+
+
+```{r fig-pre-cov-da, fig.width = 7.086614166, fig.height = 8.661417314, fig.cap = 'Characteristic of baseline features, COVID-19 course and recovery in participants with pre-existing depression or anxiety.'}
+
+paper_figures$pre_cov_da$plot
+
+```
+
+__Figure \@ref(fig:fig-pre-cov-da). Characteristic of baseline features, COVID-19 course and recovery in participants with pre-existing depression or anxiety.__
+
+
+
+```{r fig-summary, fig.width = 7.086614166, fig.height = 4.330708657, fig.cap = 'Summary of the study results.'}
+
+paper_figures$summary$plot
+
+```
+
+__Figure \@ref(fig:fig-summary). Summary of the study results.__
+

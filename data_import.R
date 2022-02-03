@@ -6,13 +6,13 @@
   library(plyr)
   library(tidyverse)
   library(foreign)
+  library(soucer) ## available from https://github.com/PiotrTymoszuk/soucer
 
-  c('./tools/sys_tools.R', 
-    './tools/cov_project_tools.R', 
+  c('./tools/cov_project_tools.R', 
     './tools/cov_project_globals.R', 
     './tools/cov_project_import_tools.R') %>% 
-    walk(source, 
-         encoding = 'UTF-8')
+    source_all(message = TRUE, 
+               crash = TRUE)
   
   insert_head()
 
@@ -508,7 +508,9 @@
   
   insert_msg('Additional data clearing tasks')
   
-  source('./data clearing scripts/data_clearing.R')
+  source_safe('./data clearing scripts/data_clearing.R', 
+              message = TRUE, 
+              crash = TRUE)
   
 # END -----
   

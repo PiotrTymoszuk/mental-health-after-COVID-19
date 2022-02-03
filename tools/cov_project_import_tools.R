@@ -5,11 +5,6 @@
   require(plyr)
   require(tidyverse)
 
-  c('./tools/sys_tools.R', 
-    './tools/cov_project_tools.R', 
-    './tools/cov_project_globals.R') %>% 
-    walk(source)
-
 # basic formatting functions -----
 
   pss2date <- function(x) {
@@ -468,7 +463,9 @@
                                      'Scuola elementare o nessun titolo' = 'elementary'; 
                                      'Scuola media' = 'secondary'; 
                                      'Scuola professionale (2-3 anni dopo il diploma della scuola media)' = 'secondary'") %>% 
-               factor(c('secondary', 'apprenticeship', 'elementary', 'tertiary'))) %>% 
+               factor(c('secondary', 'apprenticeship', 'elementary', 'tertiary')), 
+             education_class = ifelse(education == 'tertiary', 'tertiary', 'non-tertiary'), 
+             education_class = factor(education_class, c('non-tertiary', 'tertiary'))) %>% 
       mutate(region = car::recode(region, 
                                   "'Brixen' = 'Brixen/Bressanone'; 
                                     'Bressanone' = 'Brixen/Bressanone'; 
@@ -548,7 +545,8 @@
                         'administration/office', 
                         'industry', 
                         'agriculture', 
-                        'education')), 
+                        'education', 
+                        'education_class')), 
              completion_season = cut(date, 
                                      c(as.Date('2020-01-01'), 
                                        as.Date('2020-12-31'), 
@@ -567,6 +565,7 @@
              responder, 
              sex, 
              education, 
+             education_class, 
              region, 
              region_class, 
              language, 

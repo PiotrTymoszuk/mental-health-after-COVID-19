@@ -2,23 +2,25 @@
 
 # tools -----
 
-  c('./tools/sys_tools.R', 
-    './tools/cov_project_tools.R', 
+  c('./tools/cov_project_tools.R', 
     './tools/cov_project_globals.R', 
-    './tools/counting_tools.R', 
-    './tools/lm_qc_tools.R', 
-    './tools/clust_tools.R') %>% 
-  walk(source)
+    './tools/clust_tools2.R') %>% 
+  source_all(message = TRUE, 
+             crash = TRUE)
+
+  library(exda)
+  library(mgcv)
 
 # executable scripts -----
 
-  c('./analysis scripts/symptom_da_sex.R', 
-    './analysis scripts/mqp_das_factors_interest.R', 
-    './analysis scripts/das_positive_interest.R', 
-    './analysis scripts/participant_clustering.R', 
-    './analysis scripts/cluster_characteristic.R', 
+  c('./analysis scripts/participant_clustering.R', 
+    './analysis scripts/cluster_mental_scoring.R', 
+    './/analysis scripts/cluster_features.R', 
+    './analysis scripts/obs_time.R',
+    './analysis scripts/survey_date.R', 
     './analysis scripts/overlap.R', 
-    './analysis scripts/obs_time.R') %>% 
-    walk(source)
+    './analysis scripts/da_phenotyping.R') %>% 
+    source_all(message = TRUE, 
+               crash = TRUE)
 
 # END -----

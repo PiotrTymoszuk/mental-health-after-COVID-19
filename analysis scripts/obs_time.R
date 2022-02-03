@@ -1,43 +1,52 @@
-# This script investigates the scoring of MQP and DAS as a function of the observation time
+# Investigates the scoring of MQP and DAS as a function of the observation time
+
+  insert_head()
 
 # data containers -----
 
   obs_time <- list()
-
-# globals: variables of interest and variable lexicons -----
-
-  insert_msg('Globals setup')
-
-  ## lexicons: prevalence and symptom counts
-
-  obs_time$count_var_lexicon <- globals$var_lexicon %>% 
-    filter(variable %in% rforest$response)
   
+  obs_time$formulas <- globals$response %>% 
+    map(~paste(.x, '~ s(obs_time, bs = "cs")')) %>% 
+    map(as.formula) %>% 
+    set_names(globals$response)
+  
+# GAM modeling ------
+  
+  insert_msg('GAM modeling')
 
-# Analyses of the mental health score -----
+  obs_time$test_results <- model_gam(data_list = cov_data, 
+                                     formulas = obs_time$formulas, 
+                                     family = 'poisson') %>% 
+    dlply(.(cohort))
   
-  insert_msg('Analysis of the DAS and MQP scoring as a function of psychosomatic, neurocognitive symptoms ans sex')
+# Plots -----
   
-  obs_time$analyses <- analyze_split(inp_data_list = cov_data, 
-                                     var_lexicon = obs_time$count_var_lexicon, 
-                                     violin = T, 
-                                     show_points = F, 
-                                     box_alpha = 1, 
-                                     numeric_y_lab = 'score', 
-                                     point_alpha = 0.25,
-                                     split_var = 'obs_time_strata', 
-                                     labeller = c('up to 60 days' = '28 - 60', 
-                                                  '61 - 120 days' = '61 - 120', 
-                                                  '121 - 180 days' = '121 - 180', 
-                                                  'more than 180 days' = '> 180'), 
-                                     numeric_test = 'kruskal', 
-                                     numeric_colors = globals$var_lexicon %>% 
-                                       filter(variable == 'obs_time_strata') %>% 
-                                       .$level_colors, 
-                                     x_lab = 'Observation time, days', 
-                                     show_tag = F)
-
+  insert_msg('Plotting the correlations')
   
-# END ------
+  obs_time$plots <- list(cohort = cov_data,
+                       fill_color = globals$cohort_colors, 
+                       cohort_lab = globals$cohort_labs, 
+                       stats = map(obs_time$test_results, 
+                                   ~.x[['plot_sub']])) %>% 
+    pmap(function(cohort, fill_color, stats, cohort_lab) globals$response %>% 
+           map(~plot_correlation(data = cohort, 
+                                 variables = c('obs_time', .x), 
+                                 type = 'correlation', 
+                                 point_alpha = 0.25, 
+                                 point_color = fill_color, 
+                                 plot_title = paste(cohort_lab, globals$response_labels[.x], sep = ': '), 
+                                 cust_theme = globals$common_theme, 
+                                 y_lab = 'Scoring', 
+                                 x_lab = 'Survey - CoV test, days', 
+                                 show_trend = FALSE)) %>% 
+           set_names(globals$response) %>% 
+           map2(., stats, 
+                ~.x + labs(subtitle = .y)))
+  
+  obs_time$plots <- obs_time$plots %>% 
+    map(~map(.x, ~.x + geom_smooth(method = 'loess')))
+  
+# END ----
   
   insert_tail()

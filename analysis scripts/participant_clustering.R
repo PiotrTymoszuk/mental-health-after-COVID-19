@@ -1,14 +1,9 @@
 # This script tries to find subsets of the study participants in respect
-# to the most influential factors identified by RF and PCA
+# to the most influential factors identified by RF. AT serves as a training data set, IT is a test set.
+# Predictions are done by k-NN driven label propagation.
 
   insert_head()
-  
-# tools -----
-  
-  source('./tools/kohonen_tools.R')
-  
-  library(furrr)
-  
+
 # data container -----
   
   partclust <- list()
@@ -18,213 +13,142 @@
   insert_msg('Globals setup')
   
   ## the most influential variables
-  
-  partclust$parameters <- rforest_plots$pca %>% 
-    purrr::map(function(x) x$top_influential$parameter) %>% 
-    unlist %>% 
-    unique
-  
-  partclust$variables <- rforest_plots$pca %>% 
-    purrr::map(function(x) x$top_influential$variable) %>% 
-    unlist %>% 
-    unique
-  
-  ## mental scoring and prevalence variables
-  
-  partclust$mental_scoring_vars <- rforest$response
-  
-  partclust$mental_prev_vars <- c('phq_depression_positive', 
-                                  'phq_anxiety_positive')
-  
-  ## analysis table
+
+  partclust$variables <- rforest$cmm_factors
+
+  ## analysis table, min/max transformation
   
   partclust$analysis_tbl <- cov_data %>% 
-    purrr::map(select, 
-               ID, 
-               all_of(partclust$variables)) %>% 
-    purrr::map(column_to_rownames, 
-               'ID') %>% 
-    purrr::map(function(x) model.matrix(~., x)) %>% 
-    purrr::map(as.data.frame) %>% 
-    purrr::map(select, 
-               all_of(partclust$parameters))
+    map(select, ID, all_of(partclust$variables)) %>% 
+    map(~filter(.x, complete.cases(.x)))
   
-  ## som grid
+  partclust$id_vec <- partclust$analysis_tbl %>% 
+    map(~.x$ID)
   
-  partclust$som_grid <- somgrid(xdim = floor((5*sqrt(nrow(partclust$analysis_tbl$south)))^0.5), 
-                                ydim = floor((5*sqrt(nrow(partclust$analysis_tbl$south)))^0.5), 
-                                topo = 'hexagonal', 
-                                neighbourhood.fct = 'gaussian', 
-                                toroidal = T)
+  partclust$analysis_tbl <- partclust$analysis_tbl %>% 
+    map(select, -ID) %>% 
+    map(~map_dfc(.x, as.numeric)) %>% 
+    map(~map_dfc(.x, min_max))
   
-# Clustering -----
-  
-  insert_msg('Particpnant clustering')
-  
-  partclust$clust_results <- partclust$analysis_tbl %>% 
-    purrr::map(clust_fcts, 
-               som_grid = partclust$som_grid, 
-               dist.fcts = 'tanimoto', 
-               rlen = 2000,
-               hcl_distance = 'euclidean', 
-               k = 3, 
-               hc_method = 'ward.D2', 
-               seed = 123)
-  
-  detach(package:kohonen)
-  
-# cluster re-naming -> find a way to fix the node assignment -----
-  
-  insert_msg('Cluster re-naming')
+  partclust$analysis_tbl <- map2(partclust$analysis_tbl, 
+                                 partclust$id_vec, 
+                                 set_rownames)
 
-  partclust$clust_results$north$assignment <- classify_clusters(partclust$clust_results$north, 
-                                                                clust_names = c('LR', 'IR', 'HR'))
+# Developing the cluster in the AT cohort, prediction for the IT -----
   
-  partclust$clust_results$south$assignment <- classify_clusters(partclust$clust_results$south, 
-                                                                clust_names = c('LR', 'IR', 'HR'))
+  insert_msg('Participant clustering')
   
-# plotting tables with the clustering and mental health factor variables coded as dummies ----
+  partclust$clust_objects$north <- combi_cluster(data = partclust$analysis_tbl$north, 
+                                                 distance_som = 'manhattan', 
+                                                 xdim = floor((5*sqrt(nrow(partclust$analysis_tbl$north)))^0.5), 
+                                                 ydim = floor((5*sqrt(nrow(partclust$analysis_tbl$north)))^0.5), 
+                                                 topo = 'hexagonal', 
+                                                 neighbourhood.fct = 'gaussian', 
+                                                 toroidal = T, rlen = 2000, 
+                                                 node_clust_fun = hcluster, 
+                                                 distance_nodes = 'manhattan', 
+                                                 k = 3, 
+                                                 seed = 1234)
   
-  insert_msg('Plotting tables')
+  partclust$clust_objects$south <- predict(partclust$clust_objects$north, 
+                                           newdata = partclust$analysis_tbl$south, 
+                                           type = 'propagation', 
+                                           k = 5)
   
-  ## clustering features
+  ## renaming of the clusters: LR, IR and HR
+  ## for low-, intermediate- and high-risk of mental health disorders
   
-  partclust$plot_tbls <- partclust$analysis_tbl %>% ## clustering variables
-    purrr::map(rownames_to_column, 
-               'ID') %>% 
-    purrr::map(as_tibble)
+  partclust$clust_objects$north$clust_assignment <- extract(partclust$clust_objects$north, 'assignment') %>% 
+    mutate(clust_id = car::recode(clust_id, "'1' = 'IR'; '3' = 'HR'; '2' = 'LR'"), 
+           clust_id = factor(clust_id, c('LR', 'IR', 'HR')))
   
-  partclust$plot_tbls <- map2(partclust$plot_tbls, 
-                              partclust$clust_results %>% 
-                                purrr::map(~.x$assignment), 
-                              left_join, 
-                              by = 'ID')
-  
-  ## mental health scoring
-  
-  partclust$plot_tbls_mental <- cov_data %>%
-    purrr::map(select, 
-              ID, 
-              all_of(partclust$mental_scoring_vars))
-  
-  partclust$plot_tbls_mental <- map2(partclust$plot_tbls_mental, 
-                                     partclust$clust_results %>% 
-                                       purrr::map(~.x$assignment), 
-                                     left_join, 
-                                     by = 'ID')
-  
-  ## depression and anxiety prevalence
-  
-  partclust$plot_tbls_depr_anx <- cov_data %>%
-    purrr::map(select, 
-               ID,
-               all_of(partclust$mental_prev_vars)) %>% 
-    purrr::map(mutate, 
-               phq_depression_positive = car::recode(as.character(phq_depression_positive), 
-                                                     "'no' = 0; 'yes' = 1") %>% 
-                 as.numeric, 
-               phq_anxiety_positive = car::recode(as.character(phq_anxiety_positive), 
-                                                  "'no' = 0; 'yes' = 1") %>% 
-                 as.numeric)
-  
-  partclust$plot_tbls_depr_anx <- map2(partclust$plot_tbls_depr_anx, 
-                                       partclust$clust_results %>% 
-                                         purrr::map(~.x$assignment), 
-                                       left_join, 
-                                       by = 'ID')
+  partclust$clust_objects$south$clust_assignment <- extract(partclust$clust_objects$south, 'assignment') %>% 
+    mutate(clust_id = car::recode(clust_id, "'1' = 'IR'; '3' = 'HR'; '2' = 'LR'"), 
+           clust_id = factor(clust_id, c('LR', 'IR', 'HR')))
 
-# plotting clustering feature presence/absence in the nodes and clusters as a heat map -----
+# Characteristic of the cluster objects -----
   
-  insert_msg('Plotting the clustering feature presence/absence and mental health scoring as heat maps')
+  insert_msg('Characetristic of the objects')
   
-  ## clustering features
+  # training cluster diagnostic plots
   
-  partclust$hm_clust_features <- list(inp_tbl = partclust$plot_tbls, 
-                                      plot_title = globals$cohort_labs[names(partclust$plot_tbls)]) %>% 
+  partclust$diagn_plots <- c('diagnostic', 'training') %>% 
+    map(~plot(combi_analysis_object = partclust$clust_objects$north, 
+              type = .x, 
+              cust_theme = globals$common_theme)) %>% 
+  set_names(c('diagnostic', 'training'))
+  
+  ## clustering variance
+  
+  partclust$clust_var <- partclust$clust_objects %>% 
+    map(var) %>% 
+    map(~.x[c('total_wss', 'total_ss', 'between_ss', 'frac_var')]) %>% 
+    map(as_tibble) %>% 
+    map2_dfr(., names(.), ~mutate(.x, cohort = .y))
+  
+  ## clustering variance plot
+  
+  partclust$clust_var_plot <- partclust$clust_var %>% 
+    ggplot(aes(y = cohort, 
+                x = frac_var, 
+                fill = cohort)) + 
+    geom_bar(stat = 'identity', 
+             color = 'black') + 
+    geom_text(aes(label = signif(frac_var, 2)), 
+              size = 2.75, 
+              color = 'white', 
+              hjust = 1.5) + 
+    scale_fill_manual(values = globals$cohort_colors) + 
+    scale_y_discrete(labels = globals$cohort_labs) + 
+    guides(fill = FALSE) + 
+    globals$common_theme + 
+    theme(axis.title.y = element_blank()) + 
+    labs(title = 'Clustering variance', 
+         x = 'between/total sum-of-squares')
+  
+# PCA of the cluster structures ------
+  
+  insert_msg('PCA plots of the cluster structures')
+  
+  partclust$pca_plots <- partclust$clust_objects %>% 
+    map(plot, 
+        type = 'components', 
+        red_fun = 'pca', 
+        with = 'data', 
+        k = 3, 
+        cust_theme = globals$common_theme) %>% 
+    map2(., c('AT: training', 'IT: test'), 
+         ~.x$final + 
+          scale_fill_manual(values = globals$clust_colors) +
+           labs(title = .y, 
+                subtitle = 'SOM/HCl clusetring, Manhattan distance'))
+  
+# Heat maps of the clustering features ------
+  
+  insert_msg('Heat maps of the clusetring features')
+  
+  partclust$features_hm <- list(sample_clust_object = partclust$clust_objects, 
+                                plot_title = c('Participant clustering, AT cohort', 
+                                               'Participant clusetring, IT cohort'), 
+                                plot_subtitle = 'SOM/HCl clustering, Manhattan distance') %>% 
     pmap(plot_clust_hm, 
-         prevalence = T, 
-         features = partclust$variables, 
-         plot_subtitle = 'Clustering by top influential factors')
-  
-  ## mental scoring
-  
-  partclust$hm_mental_scoring <- list(inp_tbl = partclust$plot_tbls_mental, 
-                                     plot_title = globals$cohort_labs[names(partclust$plot_tbls)]) %>% 
-    pmap(plot_clust_hm, 
-         prevalence = F, 
-         features = partclust$mental_scoring_vars, 
-         plot_subtitle = 'Clustering by top influential factors', 
-         scaling_fun = min_max, 
-         midpoint = 0.5, 
-         scale_name = 'Frac. max.')
-  
-  ## depression and anxiety prevalence
-  
-  partclust$hm_depr_anx <- list(inp_tbl = partclust$plot_tbls_depr_anx, 
-                                plot_title = globals$cohort_labs[names(partclust$plot_tbls)]) %>% 
-    pmap(plot_clust_hm, 
-         prevalence = T, 
-         features = partclust$mental_prev_vars, 
-         plot_subtitle = 'Clustering by top influential factors')
-
-# Calculating the prevalence and scoring within the clusters -----
-  
-  insert_msg('Calculating the clustering factor prevalence and average mental health scoring in the clusters')
-  
-  ## clustering features
-  
-  partclust$prevalence_clust_features <- partclust$plot_tbls %>% 
-    purrr::map(get_prevalence, 
-               by = 'clust_name', 
-               scoring = F, 
-               features = partclust$variables)
-  
-  ## mental scoring
-  
-  partclust$prevalence_mental_scoring <- partclust$plot_tbls_mental %>% 
-    purrr::map(get_prevalence, 
-               by = 'clust_name', 
-               scoring = T, 
-               features = partclust$mental_scoring_vars)
-  
-  ## mental disorder prevalence
-  
-  partclust$prevalence_depr_anx <- partclust$plot_tbls_depr_anx %>% 
-    purrr::map(get_prevalence, 
-               by = 'clust_name', 
-               scoring = F, 
-               features = partclust$mental_prev_vars)
-
-# plotting clustering feature, depression and anxiety prevalence in the clusters as bar plots -----
-  
-  insert_msg('Plotting clustering feature prevalence as bar plots')
-  
-  ## clustering features
-  
-  partclust$preval_plots_clust_features <- list(clust_prevalence_list = partclust$prevalence_clust_features, 
-                                                plot_title = globals$cohort_labs[names(partclust$prevalence_clust_features)]) %>% 
-    pmap(plot_prevalence) %>% 
-    map(function(x) x + 
-          scale_x_continuous(limits = c(0, 115), 
-                             breaks = seq(0, 100, by = 20)))
-  
-  ## mental health disorders
-  
-  partclust$preval_plots_depr_anx <- list(clust_prevalence_list = partclust$prevalence_depr_anx, 
-                                                plot_title = globals$cohort_labs[names(partclust$prevalence_clust_features)]) %>% 
-    pmap(plot_prevalence) %>% 
-    map(function(x) x + 
-          scale_x_continuous(limits = c(0, 65), 
-                             breaks = seq(0, 60, by = 10)))
-  
-# plotting mental health scoring in the clusters -----
-  
-  insert_msg('Plotting mental health scoring in the clusters')
-  
-  partclust$mental_score_clust_plots <- list(clust_prevalence_list = partclust$prevalence_mental_scoring, 
-                                             plot_title = globals$cohort_labs[names(partclust$prevalence_mental_scoring)]) %>% 
-    pmap(plot_scoring, 
-         show_points = F)
+         cust_theme = globals$common_theme) %>% 
+    map(~.x + 
+          scale_y_discrete(labels = translate_var(partclust$variables, short = TRUE), 
+                           limits = rev(c('sum_symptoms_acute', 
+                                          'sum_symptoms_subacute', 
+                                          'neurocognitive_acute_sympt_sum', 
+                                          'neurocognitive_subacute_sympt_sum', 
+                                          'imp_concentration_acute', 
+                                          'imp_concentration_subacute', 
+                                          'perf_impairment', 
+                                          'stress_score'))) + 
+          scale_fill_gradient2(low = 'steelblue', 
+                               mid = 'black', 
+                               high = 'firebrick', 
+                               midpoint = 0.5, 
+                               name = 'Feature:\n\n0: low/absent\n1: high/present\n') + 
+          labs(x = 'Participant'))
 
 # END ----
 

@@ -2,14 +2,11 @@
 
 # toolbox ----
 
-  source('./tools/sys_tools.R')
-
-  library(readr)
-  library(readxl)
-  library(tibble)
-  library(ggplot2)
-  library(stringi)
-
+  require(readr)
+  require(readxl)
+  require(tidyverse)
+  require(stringi)
+  require(soucer)
 
 # Data containers ----
 
@@ -30,7 +27,7 @@
   
   globals$common_margin <- ggplot2::margin(t = 5, 
                                            l = 4, 
-                                           r = 2, 
+                                           r = 4, 
                                            unit = 'mm')
   
   globals$common_theme <- theme_classic() + theme(axis.text = globals$common_text, 
@@ -49,7 +46,8 @@
                                                   strip.text = globals$common_text,
                                                   strip.background = element_rect(fill = 'gray95', 
                                                                                   color = 'gray80'), 
-                                                  plot.margin = globals$common_margin)
+                                                  plot.margin = globals$common_margin, 
+                                                  panel.grid.major = element_line(color = 'gray90'))
 
 # Co-morbidities -----
   
@@ -156,9 +154,45 @@
   
   globals$clust_labs <- c('LR', 'IR', 'HR')
   
-  globals$clust_colors <- c('steelblue', 
-                            'gray60', 
-                            'coral3') %>% 
+  globals$clust_colors <- c('darkolivegreen4', 
+                            'lightblue4', 
+                            'indianred4') %>% 
     set_names(globals$clust_labs)
+  
+# Responses, modeling variables and their graphical representation -----
+  
+  ## responses
+
+  globals$response <- globals$var_lexicon %>% 
+    filter(response == 'yes') %>% 
+    .$variable
+  
+  ## independent variables
+  
+  globals$variables <- globals$var_lexicon %>% 
+    filter(modeling_variable == 'yes') %>% 
+    .$variable
+  
+  ## prediction types
+  
+  globals$pred_labs <- c(globals$cohort_labs['north'], 
+                         cv = 'CV', 
+                         globals$cohort_labs['south'])
+  
+  globals$pred_colors <- c(globals$cohort_colors['north'], 
+                           cv = 'plum4', 
+                           globals$cohort_colors['south'])
+  
+  
+  globals$response_labels <- c('mental_health_score' = 'OMH', 
+                               'life_quality_score' = 'QoL', 
+                               'phq_depression_score' = 'DPR', 
+                               'phq_anxiety_score' = 'ANX')
+  
+  globals$response_colors <- c('mental_health_score' = 'lightskyblue3', 
+                               'life_quality_score' = 'darkseagreen3', 
+                               'phq_depression_score' = 'cadetblue3', 
+                               'phq_anxiety_score' = 'gray60')
+
 
 # END ----

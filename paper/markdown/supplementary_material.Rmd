@@ -1,0 +1,434 @@
+---
+title: "Who is at risk of poor mental health following COVID-19 outpatient management?"
+subtitle: "Supplementary Material"
+author: "Health after COVID-19 in Tyrol study team"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+
+output: 
+  pdf_document:
+    latex_engine: xelatex
+bibliography: cov_biblio.bib
+csl: frontiers-in-medicine.csl
+header-includes:
+  \usepackage{longtable}
+  \usepackage{tabu}
+  \usepackage{caption}
+  \usepackage{makecell}
+  \usepackage{pdflscape}
+  \usepackage{array}
+  \usepackage{booktabs}
+  \usepackage{threeparttable}
+  \usepackage{threeparttablex}
+  \usepackage{wrapfig}
+  \usepackage{multirow}
+  \usepackage[normalem]{ulem}
+  \usepackage{colortbl}
+  \usepackage{xcolor}
+  \usepackage[utf8]{inputenc}
+  \usepackage{float} \floatplacement{figure}{H} \floatplacement{table}{H}
+  \newcommand{\beginsupplement}{\setcounter{table}{0}  \renewcommand{\thetable}{S\arabic{table}}       \setcounter{figure}{0} \renewcommand{\thefigure}{S\arabic{figure}}}
+---
+
+```{r, setup, include = FALSE}
+
+library(bookdown)
+
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE, dev = "cairo_pdf")
+
+
+```
+
+\newpage
+\beginsupplement
+
+# Supplementary Methods
+
+## Study design and participants
+
+The multi-center bi-national online survey study 'Health after COVID-19 in Tyrol' (ClinicalTrials.gov: NCT04661462) was conducted between the 30^th^ September 2020 and 11^th^ July 20221 in two independently recruited cohorts in Tyrol/Austria (AT) and South Tyrol/Italy (IT) [@Sahanic2021]. The study cohorts encompassed residents of the study regions aged $\geq$ 16 (AT) or $\geq$ 18 years (IT) who experienced a laboratory-confirmed SARS-CoV-2 infection (PCR or seropositivity). 
+The respondents with a minimum observation time of <28 days between the infection diagnosis and survey completion or hospitalized because of COVID-19 were excluded from the analysis. The scheme of study and analysis enrollment is depicted in __Figure 1__. The participants were invited by a public media call (both cohorts) or by their general practitioners (IT).
+
+The study was conducted in accordance with the Declaration of Helsinki as well as the national and European data policies. Each participant gave a digitally signed informed consent to participate. The study protocol was approved by the institutional review boards of the Medical University of Innsbruck (AT, approval number: 1257/2020) and of the Autonomous Province of Bolzano - South Tyrol province (IT, 0150701).
+
+## Measures, definitions and data transformation
+
+The detailed description of the questionnaire is provided by Sahanic et al [@Sahanic2021]. In brief, dates of the study completion and SARS-CoV2 infection diagnosis, observation time (a time interval between the positive SARS-CoV-2 test and the survey completion), data on biometry (weight, height), demographics (age, sex, body mass index/BMI), pre-existing co-morbidities, socioeconomic status (residence region, mother tongue, employment status and profession), smoking history and COVID-19 relevant medication, symptom duration (44 symptoms), symptomatic therapy and course of SARS-CoV-2 infection, recovery duration and status (self-perceived complete recovery, percent physical performance loss, new medication or conditions following COVID-19) as well as mental health and psychosocial stress following the disease were queried. The complete list of features analyzed in the current report is presented in __Supplementary Table S\@ref(tab:tab-model-variables)__ and the baseline characteristic of the study collectives is shown in __Table 1__.
+
+Self-reported COVID-19 symptoms were retrospectively assigned to the following duration classes: absent, present for 1 – 3 days, $\leq$ 1 week, $\leq$ 2 weeks, $\leq$ 4 weeks, $\leq$ 3 months, $\leq$ 6 months and > 6 months. Symptoms were classified as acute complaints present during the first 2 weeks after clinical onset, as sub-acute complaints when present at 2 - 4 weeks after clinical onset and persistent symptoms present for $\geq$ 4 weeks [@Sahanic2021]. Confusion, impaired concentration and forgetfulness were classified as 'neurocognitive symptoms'.
+
+Depression/anxiety before SARS-CoV2 infection, pre-existing sleep disorders, acute COVID-19 perception (common cold-, influenza-, gastroenteritis-like or unique/not experienced before), symptom relapse, complete convalescence, rehabilitation need and percent physical performance loss following COVID-19 were surveyed as single question items each.
+
+Self-perceived overall mental health (OMH) and quality of life (QoL) were assessed as single questions (‘excellent’, ‘good’, ‘fair’, ‘poor’, scored: 0, 1, 2, 3). Anxiety/depression following COVID-19 at time of study completion were investigated using PHQ-4 module (two questions each, possible answers: ‘never’, ‘some days’, ‘over 50% of days’, ‘almost every day’, scoring: 0, 1, 2, 3 points). Clinical signs of depression (DPR) or anxiety (ANX) were defined with the cutoffs of $\geq$ 3 point sum [@Lowe2010]. Psychosocial stress was measured with a modified 7 item (answers: ‘no’, ‘little’, ‘some’, ‘a lot’, scored: 0, 1, 2, 3) PHQ stress module [@Lowe2002; @Beutel2018; @Grafe2004; @HealthafterCOVID-19inTyrol], without items on weight, sexuality and past traumatic/serious events; the item on worries/dreams was adapted to COVID-19. Substantial psychosocial stress was defined by a $\geq$ 7 point cutoff.
+
+## Statistical analysis
+### Data transformation, visualization, descriptive statistic and hypothesis testing
+
+The study variables were transformed, analyzed and visualized with R version 4.0.5 with _tidyverse_ [@Wickham2019;@Wickham2016] and _cowplot_ [@Wilke2019]. 
+
+For categorical variables, numbers and percents of complete answers are presented. As most of the analyzed numeric features had a discrete or non-normal distribution as checked by Shapiro-Wilk test (__Supplementary Figure S\@ref(fig:fig-distribution)__), medians, interquartile ranges (IQR) and feature ranges are presented. To compare differences in distribution of categorical features, $\chi^2$ test was applied. To assess significance of differences in numeric variables between groups, U or Kruskal-Wallis test was used, as appropriate. Effect size for categorical variable differences was expressed as Cramer's V (function _CramerV()_, package _DescTools_). Effect size for numeric variables was expressed as Wilcoxon e (two-factor comparisons, function _wilcox_effsize()_, package _rstatix_) or $\eta^2$ (function _kruskal_effsize()_, package _rstatix_). 
+Correlation of numeric variables was assessed by Spearman test (function _cor.test()_, package _stats_). 
+Co-occurrence of two categorical variables was expressed as Cohen’s kappa statistics (function _Kappa()_, package _vcd_) [@Fleiss1969], whose significance was assessed by Z test. P values were corrected for multiple comparisons with Benjamini-Hochberg method [@Benjamini1995]. The descriptive statistic and testing was accomplished with an in-house developed R package (ExDA, https://github.com/PiotrTymoszuk/ExDA).
+
+Data pre-processing prior to Random Forest, Poisson modeling and clustering included minimum/maximum normalization of numeric explanatory features (__Supplementary Table \@ref(tab:tab-model-variables)__) and mental health scores. Numeric variables were not stratified prior to modeling or clustering.
+
+### Random Forest modeling of mental health and quality of life scoring
+
+Multi-parameter Random Forest regression models [@Breiman2001] for the scoring of ANX, DPR, OMH and QoL following COVID were trained in the Austria cohort with a set of `r length(globals$variables)` demographic, clinical, socioeconomic and psychosocial factors (__Supplementary Table \@ref(tab:tab-model-variables)__). Of note, to account for possible recall bias of acute COVID-19 symptoms and effects of convalescence time on the scoring and frequency of clinical signs of mental health disorders, the numeric observation time variable was included in the Random Forest modeling procedure. 
+The models were trained and cross-validated using _caret_ package (function _train()_, method: 'ranger') [@Kuhn2008; @Wright2017]. The data pre-processing included minimum/maximum normalization of numeric explanatory variables. Optimization of the entry model parameters ('tuning') was accomplished by 10-fold cross-validation with root mean squared error (RMSE) as the summary statistic (the tuned paramater set: splitrule = 'variance', mtry = 200, min.node.size = 40). The Random Forest models were calibrated in the post-hoc manner by the quantile GAM procedure (function _qgam()_, package _qgam_, quantiles: 0.6 for ANX, 0.55 for DPR, 0.5 for OMH and 0.5 for QoL) [@Fasiolo2020]. Finally, the model predictions were verified in cross-validation and the Italy test collective. The model prediction fit to the actual scoring was assessed by RMSE and pseudo-R^2^ statistics (__Supplementary Figures S\@ref(fig:fig-rforest-anx) - S\@ref(fig:fig-rforest-qol)__). The model prediction, validation and visualization tasks were accomplished with an in-house developed R package (caretExtra, https://github.com/PiotrTymoszuk/caretExtra).
+
+To discern the features with the largest effect on the ANX, DPR, OMH and QoL scoring each, differences in the unbiased mean squared error ($\Delta$MSE, _ranger()_ parameter importance = 'impurity_corrected') [@Nembrini2018] associated with the model terms were extracted with _varImp()_ function from _caret_ package. With this procedure, top 20 most influential explanatory variables for each response were identified (__Supplementary Figures S\@ref(fig:fig-rforest-anx) - S\@ref(fig:fig-rforest-qol)__). The overlap between such highly influential factors was presented as quasi-proportional Venn plots in __Figure 2B__ (function _plotVenn()_, package _nVennR_) [@Perez-Silva2018]. The set of `r length(rforest$cmm_factors)` highly influential parameters shared by the ANX, DPR, OMH and QoL models was utilized in further univariate and clustering analyses.
+
+### Univariable and multi-paramater GAM and Poisson modeling
+
+Association of the observation time (survey - SARS-CoV-2 infection diagnosis, __Supplementary Figure S\@ref(fig:fig-obs-time)__) and of the survey time (__Supplementary Figure S\@ref(fig:fig-survey)__) with the ANX, DPR, OMH and QoL scoring was investigated by univariate Poisson generalized additive modeling (GAM, base: cubic splines, k = 20 base dimension) [@Wood2017].
+
+Association of the common influential factors identified by Random Forest modeling (__Figure 2B__) with the ANX, DPR, OMH and QoL scoring was assessed by age- and sex-weighted Poisson regression (generalized linear modeling, log link function). The frequency weights for the Austria/Tyrol and Italy/South Tyrol cohort were based on the age and sex distribution of COVID cases in Tyrol [@AustrianAgencyforHealthandFoodSafetyAGES] and Italy [@IstitutoSuperiorediSanitaISS], respectively [@Sahanic2021]. Significance of model estimates and their 95% confidence intervals were determined with Wald Z test. P values were corrected for multiple comparisons by Benjamini-Hochberg method [@Benjamini1995]. For complete univariable modeling results, see: __Figure 3__ and  __Supplementary Table \@ref(tab:tab-uni-modeling)__.
+To estimate the amount of deviance of ANX, DPR, OMH and QoL scoring explained by the common influential factors (__Figure 2B__), multi-parameter Poisson models were constructed. The fraction of explained deviance associated with specific model terms was investigated by sequential addition (function _anova.glm()_, package _stats_, __Supplementary \@ref(fig:fig-perc-explained)__).  The model Poisson model construction, quality control and fit assessment was accomplished with an in-house developed R package (lmqc, https://github.com/PiotrTymoszuk/lmqc).
+
+### Definition of the mental disorder risk clusters
+
+The Austria cohort individuals were clustered in respect to the common influential factors identified by Random Forest modeling (__Figure 2B__) using a two-step combined self-organizing map (SOM) and hierarchical clustering algorithm [@Vesanto2000;@Kohonen1995]. In the first step, the subjects were assigned to the nodes of 13 $\times$ 13 unit hexagonal grid with the Manhattan distance between the participants. The grid size was estimated with the $5\times\sqrt N$ formula, where N is the number of observations [@Vesanto1999]. SOM assignment was accomplished with the tools provided by _kohonen_ package and home-developed wrappers (https://github.com/PiotrTymoszuk/clustering-tools-2). The SOM training process is visualized in __Supplementary Figure S\@ref(fig:fig-clust-qc)A__. In the second step, SOM nodes were subjected to hierarchical clustering with Ward D2 method and Manhattan distance measure. The optimal cluster number (k = 3) was determined by the bend of the within sum-of-squares and visual analysis of the dendrograms (__Supplementary Figure S\@ref(fig:fig-clust-qc)BC__). The hierarchical clustering was done with the base _hclust()_ function and home-developed wrappers for clustering quality control and visualization (https://github.com/PiotrTymoszuk/clustering-tools-2). To assign the Italy cohort individuals to the cluster developed in the Austria collective ('semi-supervided clustering'), a k-nearest neighbors label propagation classifier was employed (k = 5) [@Leng2014; @Sahanic2021]. The robustness of clustering in the Austria and Italy cohorts was assessed by the between-cluster to total sum-of-squares ratio ('clustering variance', __Supplementary Figure S\@ref(fig:fig-clust-qc)__).
+
+# Data availability
+
+As this study is still ongoing, the complete data will be made available on a serious request to the corresponding author and made publicly available after the completion. Analysis of the psychosocial features is available as an online _R shiny_ dashboard at Mental Health after COVID-19 in Tyrol (https://im2-ibk.shinyapps.io/mental_health_dashboard/) [@HealthafterCOVID-19inTyrol]. The R analysis pipeline is available at https://github.com/PiotrTymoszuk/mental-health-after-COVID-19.
+
+\newpage
+
+# Supplementary Tables {#sec:tables}
+
+```{r tab-model-variables, tab.cap = "Survey variables used for construction of random forest models. The table is available as a supplementary Excel file.", results = 'asis'}
+
+  flextable(tibble(' ' = ' '))
+
+```
+
+\newpage
+
+```{r tab-uni-modeling, tab.cap = "Results of univariate Poisson modeling for the most influential mental health scoring factors.", results = 'asis'}
+
+suppl_tables$uni_modeling %>% 
+  set_names(c('cohort', 'response', 'variable', 'n_level', 'complete', 'exp_beta', 'r_sq', 'p_fdr')) %>% 
+  mutate(n_level = ifelse(n_level == complete, NA, n_level)) %>% 
+  flextable %>% 
+  set_header_labels(values = c('cohort' = 'Cohort', 
+                        'response' = 'Response', 
+                        'variable' = 'Indep. variable', 
+                        'n_level' = 'N level', 
+                        'complete' = 'N complete', 
+                        'exp_beta' = 'exp β', 
+                        'r_sq' = 'R²', 
+                        'p_fdr' = 'pFDR')) %>% 
+  fontsize(size = 10, part = 'all') %>% 
+  font(fontname = 'Cambria', part = 'all') %>% 
+  width(1, width = 1.7, unit = 'cm') %>% 
+  width(2, width = 2.3, unit = 'cm') %>% 
+  width(3, width = 4, unit = 'cm') %>% 
+  width(4, width = 1.3, unit = 'cm') %>% 
+  width(5, width = 2, unit = 'cm') %>% 
+  width(6, width = 2.8, unit = 'cm') %>% 
+  width(7, width = 1.3, unit = 'cm') %>% 
+  width(8, width = 2.5, unit = 'cm') %>% 
+  merge_v(j = 1:2) %>% 
+  theme_vanilla %>% 
+  footnote(i = 1, 
+           j = 1, 
+           part = 'header', 
+           value = as_paragraph('AT: Austria, IT: Italy.'), 
+           ref_symbols = '1') %>% 
+  footnote(i = 1, 
+           j = 2, 
+           part = 'header', 
+           value = as_paragraph('OMH: overall mental health, QoL: quality of life, ANX: anxiety, DPR: depression.'), 
+           ref_symbols = '2') %>% 
+  footnote(i = 1, 
+           j = 3, 
+           part = 'header', 
+           value = as_paragraph('NC: neurocognitive symptoms, imp. conc.: impaired concentration, phys.: physical, #: number of.'), 
+           ref_symbols = '3') %>% 
+  footnote(i = 1, 
+           j = 4, 
+           part = 'header', 
+           value = as_paragraph('Numbers of participants positive for the factor, relavent only for categorical variables.'), 
+           ref_symbols = '4') %>%
+  footnote(i = 1, 
+           j = 5, 
+           part = 'header', 
+           value = as_paragraph('Complete observations.'), 
+           ref_symbols = '5') %>% 
+  footnote(i = 1, 
+           j = 6, 
+           part = 'header', 
+           value = as_paragraph('Exponent model coefficient estimate with 95% confidence intervals.'), 
+           ref_symbols = '6') %>% 
+  footnote(i = 1, 
+           j = 8, 
+           part = 'header', 
+           value = as_paragraph('Significance of the model coefficient corrected for multiple testing with Benjamini-Hochberg (FDR) method.'), 
+           ref_symbols = '7')
+  
+
+```
+
+\newpage
+
+```{r tab-clust-ft, tab.cap = "Variables significantly different between the participants with and without depression/anxiety history before COVID-19.", results = 'asis'}
+
+suppl_tables$da_features %>% 
+  flextable %>% 
+  fontsize(size = 10, part = 'all') %>% 
+  font(fontname = 'Cambria', part = 'all') %>% 
+  width(1, width = 1.7, unit = 'cm') %>% 
+  width(2, width = 2.7, unit = 'cm') %>% 
+  width(3:4, width = 4, unit = 'cm') %>% 
+  width(5, width = 1.9, unit = 'cm') %>% 
+  width(6, width = 2.2, unit = 'cm') %>% 
+  width(7, width = 2.5, unit = 'cm') %>% 
+  merge_v(j = 1) %>% 
+  theme_vanilla %>% 
+  footnote(i = 1, 
+           j = 1, 
+           part = 'header', 
+           value = as_paragraph('AT: Austria, IT: Italy.'), 
+           ref_symbols = '1') %>% 
+  footnote(i = 1, 
+           j = 3:4, 
+           value = as_paragraph('For categorical variables: percentage of the complete answers (n individuals). DA-negative: no pre-existing depression/anxiety, DA-positive: pre-existing depression/anxiety.'), 
+           part = 'header', 
+           ref_symbols = '2') %>% 
+  footnote(i = 1, 
+           j = 5, 
+           part = 'header', 
+           value = as_paragraph('Statistical test used for the AT vs IT comparison.'), 
+           ref_symbols = '3') %>% 
+  footnote(i = 1, 
+           j = 6, 
+           part = 'header', 
+           value = as_paragraph('Test p value corrected for multiple comparisons with Benjamini-Hochberg (FDR) method'), 
+           ref_symbols = '4') %>% 
+  footnote(i = 1, 
+           j = 7, 
+           part = 'header', 
+           value = as_paragraph("Effect size: Wilcoxon r or Cramer's V."), 
+           ref_symbols = '5')
+  
+
+```
+
+\newpage
+
+# Supplementary Figures {#sec:figures}
+
+```{r fig-distribution, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Value distribution of the mental health and quality of life scores, stress score and physical performance loss.'}
+
+suppl_figures$distribution$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-distribution). Value distribution of the mental health and quality of life scores, stress score and physical performance loss.__
+
+Variable distribution was presented as histograms, solid lines represent medians, dashed lines represent 25^th^ and 75^th^ percentile. Normality was assessed by Shapiro-Wilk test. The values of the test statistic and p are presented in the plot headings.
+
+AT: Austria cohort, IT: Italy cohort, OMH: overall mental health score, QoL quality of life score, DPR: depression score, ANX: anxiety score, phys.: physical.
+
+\newpage
+
+```{r fig-obs-time, fig.width = 7.086614166, fig.height = 9.055118101, fig.cap = 'Effect of the observation time on mental health and quality of life scoring.'}
+
+suppl_figures$obs_time$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-obs-time). Effect of the observation time on mental health and quality of life scoring.__
+
+Effects of the survey participation - SARS-CoV-2 diagnosis time interval on the mental health and quality of life scoring was investigated with univariate Poisson general additive modeling (GAM, cubic spline base, k = 20 base dimension). Trend significance corrected for multiple testing with Benjamini-Hochberg method and fraction of the scoring variance explained by the observation time expressed as R^2^ are presented in  the plot captions. Each point in the plot represents a single observations, blue lines with gray ribbons represent LOESS (locally weighted scatterplot smoothing) trends with 95$\%$ confidence regions. Numbers of complete observations are shown under the plots.
+
+AT: Austria cohort, IT: Italy cohort, OMH: overall mental health score, QoL quality of life score, DPR: depression score, ANX: anxiety score, phys.: physical.
+
+\newpage
+
+```{r fig-survey, fig.width = 7.086614166, fig.height = 9.055118101, fig.cap = 'Effect of the survey duration on mental health and quality of life scoring.'}
+
+suppl_figures$survey$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-survey). Effect of the survey duration on mental health and quality of life scoring.__ 
+
+Effects of the survey duration time on the mental health and quality of life scoring was investigated with univariate Poisson general additive modeling (GAM, cubic spline base, k = 20 base dimension). Trend significance corrected for multiple testing with Benjamini-Hochberg method and fraction of the scoring variance explained by the survey duration expressed as R^2^ are presented in  the plot captions. Each point in the plot represents a single observations, blue lines with gray ribbons represent LOESS (locally weighted scatterplot smoothing) trends with 95$\%$ confidence regions. Numbers of complete observations are shown under the plots.
+
+AT: Austria cohort, IT: Italy cohort, OMH: overall mental health score, QoL quality of life score, DPR: depression score, ANX: anxiety score, phys.: physical.
+
+\newpage
+
+```{r fig-correlation-responses, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Inter-correlation of the mental health and quality of life score variables.'}
+
+suppl_figures$correlation_responses$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-correlation-responses). Inter-correlation of the mental health and quality of life score variables.__
+
+Correlation of the mental health and quality of life scoring (__A__) and overlap between poor self-reported overall mental health, poor quality of life, anxiety and depression sign (__B__) were investigated by Spearman correlation and Cohen's $\kappa$, respectively. Values of the correlation/overlap statistics are presented in bubble plots. Point size and color corresponds to the statistic value, the values are indicated next to the plots. Significant $\rho$ and $\kappa$ statistic values are labeled in bold. Numbers of complete observations are shown under the plots.
+
+AT: Austria cohort, IT: Italy cohort, OMH: overall mental health, QoL quality of life, DPR: depression, ANX: anxiety.
+
+\newpage
+
+```{r fig-correlation-responses-da, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Inter-correlation of the mental health and quality of life score variables in participants with pre-existing depression or anxiety.'}
+
+suppl_figures$correlation_responses_da$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-correlation-responses-da). Inter-correlation of the mental health and quality of life score variables in participants with pre-existing depression or anxiety.__
+
+Correlation of the mental health and quality of life scoring (__A__) and overlap between poor self-reported overall mental health, poor quality of life, anxiety and depression sign (__B__) were investigated in the participants with pre-existing depression/anxiety by Spearman correlation and Cohen's $\kappa$, respectively. Values of the correlation/overlap statistics are presented in bubble plots. Point size and color corresponds to the statistic value, the values are indicated next to the plots. Significant $\rho$ and $\kappa$ statistic values are labeled in bold. Numbers of complete observations are shown under the plots.
+
+AT: Austria cohort, IT: Italy cohort, OMH: overall mental health, QoL quality of life, DPR: depression, ANX: anxiety.
+
+\newpage
+
+```{r fig-rforest-anx, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Random Forest modeling of the anxiety scoring.'}
+
+suppl_figures$rforest_anx$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-rforest-anx). Random Forest modeling of the anxiety scoring.__
+
+The effects of `r length(globals$variables)` demographic, clinical, socioeconomic and psychosocial factors (__Supplementary Table S\@ref(tab:tab-model-variables)__) on the anxiety (ANX) scoring were modeled with Random Forest technique. Numeric variables were minimum/maximum normalized prior to modeling. The model was trained in the Austria (AT) cohort, 10-fold cross-validated (CV) and its predictions validated in the Italy (IT) cohort. Explanatory variable importance was estimated in the AT cohort by unbiased $\Delta$MSE statistic. Numbers of complete observations are indicated in (__B__).
+
+__(A)__ Importance statistic values for the top 20 most influential explanatory variables in the AT cohort.
+
+__(B)__ Predicted and actual ANX scoring. Each point represents a single observation, solid black lines represent the optimal calibration line (slope 1, intercept 0). Blue lines with gray regions represent LOESS (locally weighted scatterplot smoothing) trends with 95$\%$ confidence intervals. Root mean squared error (RMSE) and R^2^ statistic values are presented in the plot captions.
+
+phys.: physical, #: number of, persist.: persistent, imp. conc.: impaired concentration, comorb.: comorbidities, NC: neurocognitive symptoms.
+
+\newpage
+
+```{r fig-rforest-dpr, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Random Forest modeling of the depression scoring.'}
+
+suppl_figures$rforest_dpr$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-rforest-dpr). Random Forest modeling of the depression scoring.__
+
+The effects of `r length(globals$variables)` demographic, clinical, socioeconomic and psychosocial factors (__Supplementary Table S\@ref(tab:tab-model-variables)__) on the depression (DPR) scoring were modeled with Random Forest technique. Numeric variables were minimum/maximum normalized prior to modeling. The model was trained in the Austria (AT) cohort, 10-fold cross-validated (CV) and its predictions validated in the Italy (IT) cohort. Explanatory variable importance was estimated in the AT cohort by unbiased $\Delta$MSE statistic. Numbers of complete observations are indicated in (__B__).
+
+__(A)__ Importance statistic values for the top 20 most influential explanatory variables in the AT cohort.
+
+__(B)__ Predicted and actual ANX scoring. Each point represents a single observation, solid black lines represent the optimal calibration line (slope 1, intercept 0). Blue lines with gray regions represent LOESS (locally weighted scatterplot smoothing) trends with 95$\%$ confidence intervals. Root mean squared error (RMSE) and R^2^ statistic values are presented in the plot captions.
+
+phys.: physical, #: number of, persist.: persistent, imp. conc.: impaired concentration, tired. day: tiredness at day, imp. f. m. s.: impaired fine motor skills, pre-CoV: before COVID-19, sleep disord.: sleep disorder, depr/anxiety: depression/anxiety, empl. sector: employment sector, NC: neurocognitive symptoms.
+
+\newpage
+
+```{r fig-rforest-omh, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Random Forest modeling of the overall mental health scoring.'}
+
+suppl_figures$rforest_omh$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-rforest-omh). Random Forest modeling of the overall mental health scoring.__
+
+The effects of `r length(globals$variables)` demographic, clinical, socioeconomic and psychosocial factors (__Supplementary Table S\@ref(tab:tab-model-variables)__) on the self-perceived overall mental health (OMH) scoring were modeled with Random Forest technique. Numeric variables were minimum/maximum normalized prior to modeling. The model was trained in the Austria (AT) cohort, 10-fold cross-validated (CV) and its predictions validated in the Italy (IT) cohort. Explanatory variable importance was estimated in the AT cohort by unbiased $\Delta$MSE statistic. Numbers of complete observations are indicated in (__B__).
+
+__(A)__ Importance statistic values for the top 20 most influential explanatory variables in the AT cohort.
+
+__(B)__ Predicted and actual ANX scoring. Each point represents a single observation, solid black lines represent the optimal calibration line (slope 1, intercept 0). Blue lines with gray regions represent LOESS (locally weighted scatterplot smoothing) trends with 95$\%$ confidence intervals. Root mean squared error (RMSE) and R^2^ statistic values are presented in the plot captions.
+
+phys.: physical, #: number of, persist.: persistent, imp. conc.: impaired concentration, comorb.: comorbidities, NC: neurocognitive symptoms, pre-CoV: before COVID-19, depr/anxiety: depression/anxiety, sleep disord.: sleep disorder, tired. day: tiredness at day.
+
+\newpage
+
+```{r fig-rforest-qol, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Random Forest modeling of the quality of life scoring.'}
+
+suppl_figures$rforest_qol$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-rforest-qol). Random Forest modeling of the quality of life scoring.__
+
+The effects of `r length(globals$variables)` demographic, clinical, socioeconomic and psychosocial factors (__Supplementary Table S\@ref(tab:tab-model-variables)__) on the self-perceived quality of life (QoL) scoring were modeled with Random Forest technique. Numeric variables were minimum/maximum normalized prior to modeling. The model was trained in the Austria (AT) cohort, 10-fold cross-validated (CV) and its predictions validated in the Italy (IT) cohort. Explanatory variable importance was estimated in the AT cohort by unbiased $\Delta$MSE statistic. Numbers of complete observations are indicated in (__B__).
+
+__(A)__ Importance statistic values for the top 20 most influential explanatory variables in the AT cohort.
+
+__(B)__ Predicted and actual ANX scoring. Each point represents a single observation, solid black lines represent the optimal calibration line (slope 1, intercept 0). Blue lines with gray regions represent LOESS (locally weighted scatterplot smoothing) trends with 95$\%$ confidence intervals. Root mean squared error (RMSE) and R^2^ statistic values are presented in the plot captions.
+
+phys.: physical, #: number of, persist.: persistent, imp. conc.: impaired concentration, comorb.: comorbidities, NC: neurocognitive symptoms, pre-CoV: before COVID-19, depr/anxiety: depression/anxiety, MS: pre-existing multiple sclerosis, BMI: body mass index.
+
+\newpage
+
+```{r fig-perc-explained, fig.width = 7.086614166, fig.height = 7.87401574, fig.cap = 'Fraction of mental health and quality of life scoring deviance explained by the common most influential factors.'}
+
+suppl_figures$perc_explained$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-perc-explained). Fraction of mental health and quality of life scoring deviance explained by the common most influential factors.__
+
+Fraction of deviance explained by the most influential factors for the mental health and quality of life scoring (__Figure 2B__) was investigated by multi-parameter Poisson modeling. Numeric variables were minimum/maximum normalized prior to modeling. The fraction of explained deviance associated with specific model terms was investigated by sequential addition and the values were presented in as bar plots. The total explained deviance fraction is shown in the plot captions. Numbers of complete observations are indicated under the plots.
+
+\newpage
+
+```{r fig-rf-performance-da, fig.width = 7.086614166, fig.height = 3.149606296, fig.cap = 'Prediction of mental health and quality of life scoring by Random modeling in participants with pre-existing depression or anxiety.'}
+
+suppl_figures$rf_performance_da$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-rf-performance-da). Prediction of mental health and quality of life scoring by Random modeling in participants with pre-existing depression or anxiety.__
+
+Random Forest models for the mental health and life quality scoring were developed in the Austria cohort as presented in __Figure 2A__ and __Supplementary Figures S\@ref(fig:fig-rforest-anx) - S\@ref(fig:fig-rforest-qol)__. Numeric variables were minimum/maximum normalized prior to modeling. The model performance measured by root mean squared error (RMSE) and the fraction of explained variance in mental health and quality of life scoring expressed as R^2^ was assessed for model predictions in the subsets of participants with or without depression/anxiety before COVID-19 (DA+ and DA-, respectively) in the Austria (AT) and Italy cohort. Numbers of complete observations are indicated under the plots.
+
+\newpage
+
+```{r fig-clust-qc, fig.width = 7.086614166, fig.height = 6.299212592, fig.cap = 'Development of the participant clusters in respect to the common most influential factors for mental health and quality of life scoring.'}
+
+suppl_figures$clust_qc$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-clust-qc). Development of the participant clusters in respect to the common most influential factors for mental health and quality of life scoring.__
+
+Study participants were assigned to the Low Risk (LR), Intermediate Risk (IR) and High Risk (HR) subsets by clustering in respect to the most influential factors for the mental health and quality of life scoring (__Figure 2B__). Numeric variables were minimum/maximum normalized prior to modeling. The procedure in the training Austria (AT) cohort involved the self-organizing map (SOM, 13 $\times$ 13 hexagonal grid, Manhattan distance between participants) and the hierarchical clustering (Ward D2 method, Manhattan distance between the SOM nodes) algorithms. Assignment of the Italy (IT) cohort participants to the clusters was accomplished by the k-nearest neighbors classification.
+
+__(A)__ Training of the SOM grid in the AT cohort. The loss of the mean distance to the winning unit for each SOM node in course of the algorithm iteration (n = 2000 iterations in total) is presented. Points represent single SOM nodel, blue line represents a LOESS trend (locally weighted scatterplot smoothing).
+
+__(B)__ Determination of the optimal number of clusters of the SOM nodes in the AT cohort. Total within-cluster sum-of-squares are presented as a function of the cluster number. The optimal cluster number was determined by the bend of the curve.
+
+__(C)__ Dendrogram of the SOM node clustering. Each leaf represents a single SOM node.
+
+__(D)__ Fraction of clustering variance (between-cluster to total sum-of-squares ratio) in the training AT cohort and the test IT collective.
+
+\newpage
+
+```{r fig-clust-features-summary, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Characteristic of the mental disorder risk clusters.'}
+
+suppl_figures$clust_features_summary$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-clust-features-summary). Characteristic of the mental disorder risk clusters.__
+
+Differences of `r length(globals$variables)` demographic, clinical, socioeconomic and psychosocial factors (__Supplementary Table S\@ref(tab:tab-model-variables)__) between the mental disorder risk clusters (__Figure 4__ and __Supplementary Figure S\@ref(fig:fig-clust-qc)__) were investigated by Kruskal-Wallis test and $\chi^2$ test for numeric (__A__) and categorical features (__B__), respectively. Test results were corrected for multiple testing with Benjamini-Hochberg (FDR) method. Effect size was estimated with $\eta^2$ statistic for numeric variables and with Cramer's V for categorical variables. Moderately-to-strongly regulated variables were defined by the $\eta^2$ > 0.06 or V > 0.30 cutoffs, as appropriate. Variable significance and effect size are presented in the point plots. Dashed lines represent the significance and effect size cutoffs. Strongly regulated variables are highlighted in red. Numbers of participants assigned to the clusters are presented in (__B__). AT: austria, IT: Italy.
+
+\newpage
+
+```{r fig-clust-features-heat, fig.width = 7.086614166, fig.height = 5.511811018, fig.cap = 'Variables significantly differing between the mental disorder risk clusters.'}
+
+suppl_figures$clust_features_heat$plot
+
+```
+
+__Supplementary Figure S\@ref(fig:fig-clust-features-heat). Variables significantly differing between the mental disorder risk clusters.__
+
+Variables moderately-to-strongly regulated between the mental disorder risk clusters (LR: low risk, IR: intermediate risk, HR: high risk) in the Austria (AT) and Italy (IT) cohort were identified as presented in __Supplementary Figure S\@ref(fig:fig-clust-features-summary)__. Minimum/maximum-normalized values of the variables deemed strongly regulated in both study collectives are presented in heat maps. Numbers of participants assigned to the clusters are presented under the plots.
+
+sympt. persistence: individual time to complete symptom resolution, phys.: physical, persist.: persistent, tired. day: tiredness at day, imp. conc.: impaired concentration, NC: neurocognitive symptoms.
+
+\newpage
+
+# References

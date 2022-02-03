@@ -235,6 +235,11 @@
         vars_to_sum = paste(model_wrangling$neurocognitive_sympt, 
                             'acute', sep = '_'))
   
+  model_wrangling$neurocognitive_subacute_sympt_sum <- cov_data %>% 
+    map(sum_variables, 
+        vars_to_sum = paste(model_wrangling$neurocognitive_sympt, 
+                            'subacute', sep = '_'))
+  
   model_wrangling$neurocognitive_long_sympt_sum <- cov_data %>% 
     map(sum_variables, 
         vars_to_sum = paste(model_wrangling$neurocognitive_sympt, 
@@ -244,10 +249,14 @@
                    model_wrangling$neurocognitive_acute_sympt_sum, 
                    function(x, y) mutate(x, neurocognitive_acute_sympt_sum = y)) %>% 
     map2(., 
+         model_wrangling$neurocognitive_subacute_sympt_sum, 
+         function(x, y) mutate(x, neurocognitive_subacute_sympt_sum = y)) %>% 
+    map2(., 
          model_wrangling$neurocognitive_long_sympt_sum, 
          function(x, y) mutate(x, neurocognitive_long_sympt_sum = y)) %>% 
     map(mutate, 
         neurocognitive_acute_sympt_class = factor(neurocognitive_acute_sympt_sum), 
+        neurocognitive_subacute_sympt_class = factor(neurocognitive_subacute_sympt_sum), 
         neurocognitive_long_sympt_class = factor(neurocognitive_long_sympt_sum))
 
 # END -----

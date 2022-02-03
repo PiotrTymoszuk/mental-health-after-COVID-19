@@ -1,0 +1,138 @@
+```{r fig-distribution, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Value distribution of the mental health and quality of life scores, stress score and physical performance loss.'}
+
+suppl_figures$distribution$plot
+
+```
+
+__Figure \@ref(fig:fig-distribution). Value distribution of the mental health and quality of life scores, stress score and physical performance loss.__
+
+
+
+```{r fig-obs-time, fig.width = 7.086614166, fig.height = 9.055118101, fig.cap = 'Effect of the observation time on mental health and quality of life scoring.'}
+
+suppl_figures$obs_time$plot
+
+```
+
+__Figure \@ref(fig:fig-obs-time). Effect of the observation time on mental health and quality of life scoring.__
+
+
+
+```{r fig-survey, fig.width = 7.086614166, fig.height = 9.055118101, fig.cap = 'Effect of the survey duration on mental health and quality of life scoring.'}
+
+suppl_figures$survey$plot
+
+```
+
+__Figure \@ref(fig:fig-survey). Effect of the survey duration on mental health and quality of life scoring.__
+
+
+
+```{r fig-correlation-responses, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Inter-correlation of the mental health and quality of life score variables.'}
+
+suppl_figures$correlation_responses$plot
+
+```
+
+__Figure \@ref(fig:fig-correlation-responses). Inter-correlation of the mental health and quality of life score variables.__
+
+
+
+```{r fig-correlation-responses-da, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Inter-correlation of the mental health and quality of life score variables in participants with pre-existing depression or anxiety.'}
+
+suppl_figures$correlation_responses_da$plot
+
+```
+
+__Figure \@ref(fig:fig-correlation-responses-da). Inter-correlation of the mental health and quality of life score variables in participants with pre-existing depression or anxiety.__
+
+
+
+```{r fig-rforest-anx, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Random Forest modeling of the anxiety scoring.'}
+
+suppl_figures$rforest_anx$plot
+
+```
+
+__Figure \@ref(fig:fig-rforest-anx). Random Forest modeling of the anxiety scoring.__
+
+
+
+```{r fig-rforest-dpr, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Random Forest modeling of the depression scoring.'}
+
+suppl_figures$rforest_dpr$plot
+
+```
+
+__Figure \@ref(fig:fig-rforest-dpr). Random Forest modeling of the depression scoring.__
+
+
+
+```{r fig-rforest-omh, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Random Forest modeling of the overall mental health scoring.'}
+
+suppl_figures$rforest_omh$plot
+
+```
+
+__Figure \@ref(fig:fig-rforest-omh). Random Forest modeling of the overall mental health scoring.__
+
+
+
+```{r fig-rforest-qol, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Random Forest modeling of the quality of life scoring.'}
+
+suppl_figures$rforest_qol$plot
+
+```
+
+__Figure \@ref(fig:fig-rforest-qol). Random Forest modeling of the quality of life scoring.__
+
+
+
+```{r fig-perc-explained, fig.width = 7.086614166, fig.height = 7.87401574, fig.cap = 'Fraction of mental health and quality of life scoring deviance explained by the common most influential factors.'}
+
+suppl_figures$perc_explained$plot
+
+```
+
+__Figure \@ref(fig:fig-perc-explained). Fraction of mental health and quality of life scoring deviance explained by the common most influential factors.__
+
+
+
+```{r fig-rf-performance-da, fig.width = 7.086614166, fig.height = 3.149606296, fig.cap = 'Prediction of mental health and quality of life scoring by Random modeling in participants with pre-existing depression or anxiety.'}
+
+suppl_figures$rf_performance_da$plot
+
+```
+
+__Figure \@ref(fig:fig-rf-performance-da). Prediction of mental health and quality of life scoring by Random modeling in participants with pre-existing depression or anxiety.__
+
+
+
+```{r fig-clust-qc, fig.width = 7.086614166, fig.height = 6.299212592, fig.cap = 'Development of the participant clusters in respect to the common most influential factors for mental health and quality of life scoring.'}
+
+suppl_figures$clust_qc$plot
+
+```
+
+__Figure \@ref(fig:fig-clust-qc). Development of the participant clusters in respect to the common most influential factors for mental health and quality of life scoring.__
+
+
+
+```{r fig-clust-features-summary, fig.width = 7.086614166, fig.height = 7.086614166, fig.cap = 'Characteristic of the mental disorder risk clusters.'}
+
+suppl_figures$clust_features_summary$plot
+
+```
+
+__Figure \@ref(fig:fig-clust-features-summary). Characteristic of the mental disorder risk clusters.__
+
+
+
+```{r fig-clust-features-heat, fig.width = 7.086614166, fig.height = 6.299212592, fig.cap = 'Variables significantly differing between the mental disorder risk clusters.'}
+
+suppl_figures$clust_features_heat$plot
+
+```
+
+__Figure \@ref(fig:fig-clust-features-heat). Variables significantly differing between the mental disorder risk clusters.__
+
