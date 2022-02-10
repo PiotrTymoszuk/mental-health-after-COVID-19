@@ -15,7 +15,7 @@
 
   c('./analysis scripts/participant_clustering.R', 
     './analysis scripts/cluster_mental_scoring.R', 
-    './/analysis scripts/cluster_features.R', 
+    './analysis scripts/cluster_features.R', 
     './analysis scripts/obs_time.R',
     './analysis scripts/survey_date.R', 
     './analysis scripts/overlap.R', 

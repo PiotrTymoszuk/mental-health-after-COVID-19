@@ -64,7 +64,7 @@
   insert_msg('Regression plots')
   
   rf_da$regression_plots <- rf_da$test_preds %>% 
-    map(function(response) list(predx_object = response, 
+    map(function(response) list(x = response, 
                                 plot_title = c('AT, DA-', 
                                                'AT, DA+', 
                                                'IT, DA-', 

@@ -81,7 +81,7 @@
   
   insert_msg('Model predictions')
   
-  rforest$predictions <- list(caretx_model = rforest$models_train_north, 
+  rforest$predictions <- list(object = rforest$models_train_north, 
                               newdata = rforest$inp_tbl$south) %>% 
     pmap(predict)
 
@@ -89,7 +89,7 @@
   
   insert_msg('Model prediction stats')
   
-  rforest$pred_stats <- list(caretx_model = rforest$models_train_north, 
+  rforest$pred_stats <- list(object = rforest$models_train_north, 
                              newdata = rforest$inp_tbl$south) %>% 
     pmap(summary, 
          plain = TRUE) %>% 
@@ -99,7 +99,7 @@
   
   insert_msg('Model calibration')
 
-  rforest$calibrated_preds <- list(caretx_model = rforest$models_train_north, 
+  rforest$calibrated_preds <- list(x = rforest$models_train_north, 
                                    newdata = rforest$inp_tbl$south) %>% 
     pmap(calibration, 
          qu = seq(0.4, 0.7, by = 0.05))

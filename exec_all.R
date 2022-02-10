@@ -8,7 +8,8 @@
                            'data_exploration.R', 
                            'risk_modeling.R', 
                            'data_analyses.R', 
-                           'render_paper.R'), 
+                           'render_paper.R', 
+                           'shiny_export.R'), 
                          crash = FALSE, 
                          message = TRUE)
   

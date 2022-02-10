@@ -42,7 +42,7 @@
   insert_msg('Regression plots, fitted vs outcome')
 
   rforest_plots$calibrated_regression <- globals$response %>% 
-    map(function(response) list(predx_object = rforest$calibrated_preds[[response]][c('train', 'cv', 'test')], 
+    map(function(response) list(x = rforest$calibrated_preds[[response]][c('train', 'cv', 'test')], 
                                 point_color = globals$pred_colors, 
                                 plot_title = paste(globals$response_labels[[response]], 
                                                    globals$pred_labs, sep = ': ')) %>% 
